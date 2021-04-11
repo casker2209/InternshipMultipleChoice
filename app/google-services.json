@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "613733489888",
+    "project_id": "internship-api-310001",
+    "storage_bucket": "internship-api-310001.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:613733489888:android:e3da2bd01d8e9e401fc485",
+        "android_client_info": {
+          "package_name": "vn.edu.usth.internshipmultiplechoice"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "613733489888-lt00i6lur387vgjceau107t01oo8d5d6.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "vn.edu.usth.internshipmultiplechoice",
+            "certificate_hash": "91ae5b3a8bbc22d5a3705bae9cfda41b6a519a45"
+          }
+        },
+        {
+          "client_id": "613733489888-n52rt1mepfmcudnj9rie0knjjig9r5lc.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDJPln9ImWh8AtmNrEpVlON6tb8dZdDFjY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "613733489888-n52rt1mepfmcudnj9rie0knjjig9r5lc.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
