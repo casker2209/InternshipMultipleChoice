@@ -1,7 +1,10 @@
 package vn.edu.usth.internshipmultiplechoice.retrofit;
 
+import org.json.JSONObject;
+
 import java.util.List;
 
+import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.GET;
@@ -10,8 +13,8 @@ import retrofit2.http.POST;
 
 public interface UserService {
 
-    String Endpoint = "http://localhost:6789";
+    String Endpoint = "https://10.0.2.2:6789";
     @Headers("Content-Type: application/json")
     @POST("/api/auth/signin")
-    Call<UserInfo> getUserInfo(@Body String body);
+    Call<ResponseBody> getUserInfo(@Body String body);
 }

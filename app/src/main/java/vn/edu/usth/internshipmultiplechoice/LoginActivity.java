@@ -21,11 +21,13 @@ import com.google.android.gms.common.api.GoogleApiClient;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
+import vn.edu.usth.internshipmultiplechoice.retrofit.RetrofitClient;
 import vn.edu.usth.internshipmultiplechoice.retrofit.UserInfo;
 import vn.edu.usth.internshipmultiplechoice.retrofit.UserService;
 
@@ -33,13 +35,15 @@ public class LoginActivity extends AppCompatActivity {
 
     private EditText passwordBox;
     private EditText usernameBox;
-    private TextView loginGoogle;
-    GoogleApiClient mGoogleApiClient;
-    private static final int RC_SIGN_IN = 9001;
+    //    private TextView loginGoogle;
+//    GoogleApiClient mGoogleApiClient;
+//    private static final int RC_SIGN_IN = 9001;
     private TextView login;
+    private TextView signup;
+    private TextView guest;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+/*        GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                 .requestIdToken(getString(R.string.server_clientid))
                 .requestEmail()
                 .build();
@@ -51,43 +55,49 @@ public class LoginActivity extends AppCompatActivity {
                     }
                 })
                 .addApi(Auth.GOOGLE_SIGN_IN_API, gso)
-                .build();
-        Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl(UserService.Endpoint)
-                .addConverterFactory(GsonConverterFactory.create())
-                .build();
-        final UserService userService = retrofit.create(UserService.class);
+                .build(); */
+        final RetrofitClient retrofitClient = RetrofitClient.getInstance();
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         passwordBox = findViewById(R.id.passwordbox);
         usernameBox = findViewById(R.id.usernamebox);
         login = findViewById(R.id.login);
+        signup = findViewById(R.id.signupbutton);
         login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 String user = usernameBox.getText().toString();
                 String password = passwordBox.getText().toString();
-                if (user.isEmpty() || password.equals("")) {
-                    Log.e("Login failed","Username/password not filled in");
-                    Toast.makeText(getBaseContext(),"Username/password not filled in",Toast.LENGTH_LONG);
+                if (user.isEmpty() || password.isEmpty()) {
+                    Log.e("Login failed", "Username/password not filled in");
+                    Toast.makeText(getBaseContext(), "Username/password not filled in", Toast.LENGTH_LONG);
+                } else {
+                    Log.e("Clicked", "Clicked");
+                    String namepassed = usernameBox.getText().toString();
+                    String passwordpassed = passwordBox.getText().toString();
+                    Intent intent = new Intent(getApplicationContext(), LoadingActivity.class);
+                    intent.putExtra("username", namepassed);
+                    intent.putExtra("password", passwordpassed);
+                    startActivity(intent);
                 }
-                else{
-                    JSONObject paramObject = new JSONObject();
+                ;
+        /*
                     try {
-                        paramObject.put("username", "guest2");
-                        paramObject.put("password", "asdasdsadasdasdasdasdasdas");
-                        Call<UserInfo> userCall = userService.getUserInfo(paramObject.toString());
-                        userCall.enqueue(new Callback<UserInfo>() {
+                        paramObject.put("username", usernameBox.getText().toString());
+                        paramObject.put("password", passwordBox.getText().toString());
+                        System.out.println(paramObject);
+                        Call<ResponseBody> userCall = retrofitClient.getMyApi().Login(paramObject.toString());
+                        userCall.enqueue(new Callback<ResponseBody>() {
                             @Override
-                            public void onResponse(Call<UserInfo> call, Response<UserInfo> response) {
-                                Log.e("Success","Login successfully");
+                            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                                Log.e("Success", "Login successfully");
                                 System.out.print("OK");
-                                Toast.makeText(getApplicationContext(),"Login",Toast.LENGTH_LONG);
+                                Toast.makeText(getApplicationContext(), "Login", Toast.LENGTH_LONG);
                             }
 
                             @Override
-                            public void onFailure(Call<UserInfo> call, Throwable t) {
-
+                                public void onFailure(Call<ResponseBody> call, Throwable t) {
+                                t.printStackTrace();
                             }
                         });
                     } catch (JSONException e) {
@@ -97,7 +107,7 @@ public class LoginActivity extends AppCompatActivity {
                 }
             }
         });
-        loginGoogle = findViewById(R.id.logingoogle);
+/*        loginGoogle = findViewById(R.id.logingoogle);
         loginGoogle.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -131,4 +141,23 @@ public class LoginActivity extends AppCompatActivity {
 
     }
 
+}*/
+            }
+        });
+        signup.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(getApplicationContext(),SignupActivity.class));
+            }
+        });
+        guest = findViewById(R.id.guest);
+        guest.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getApplicationContext(), LoadingActivity.class);
+                intent.putExtra("isGuest",true);
+                startActivity(intent);
+            }
+        });
+    }
 }

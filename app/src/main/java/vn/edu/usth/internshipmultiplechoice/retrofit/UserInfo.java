@@ -3,14 +3,27 @@ package vn.edu.usth.internshipmultiplechoice.retrofit;
 public class UserInfo {
     private String id;
     private String username;
-    private String password;
     private String email;
-    private String token;
-    public UserInfo(String id,String username,String password,String email,String token){
+    private String accessToken;
+    public UserInfo(String id,String username,String email,String accessToken){
         this.id = id;
         this.username = username;
-        this.password = password;
         this.email = email;
-        this.token = token;
+        this.accessToken = accessToken;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+    public String getAccessToken() {
+        return accessToken;
+    }
+
+    public String getUsername() {
+        return username;
     }
 }
