@@ -21,9 +21,14 @@ import vn.edu.usth.internshipmultiplechoice.object.Question;
 public class ExamAdapterRecycler extends RecyclerView.Adapter<ExamAdapterRecycler.ViewHolder> {
     Exam exam;
     Context context;
+    List<String> chosen;
     public ExamAdapterRecycler(Context context, Exam exam){
         this.context = context;
         this.exam = exam;
+        this.chosen = new ArrayList<>();
+        for(int i = 0;i<exam.getQuestionList().size();i++){
+            chosen.add(exam.getQuestionList().get(i).getA());
+        }
     }
 
     @NonNull
@@ -39,16 +44,16 @@ public class ExamAdapterRecycler extends RecyclerView.Adapter<ExamAdapterRecycle
     public Question getQuestion(int position){
         return exam.getQuestionList().get(position);
     }
-    public String getCorrect(int position){
-        return "";
+    public String getChosen(int position){
+        return chosen.get(position);
     }
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         Question question = exam.getQuestionList().get(position);
-        holder.A.setText(question.getA());
-        holder.B.setText(question.getB());
-        holder.C.setText(question.getC());
-        holder.D.setText(question.getD());
+        holder.A.setText("A: "+question.getA());
+        holder.B.setText("B: "+question.getB());
+        holder.C.setText("C: "+question.getC());
+        holder.D.setText("D: "+question.getD());
         holder.Name.setText(question.getName());
         holder.Num.setText("Question "+String.valueOf(position+1));
 
@@ -57,16 +62,16 @@ public class ExamAdapterRecycler extends RecyclerView.Adapter<ExamAdapterRecycle
             public void onCheckedChanged(RadioGroup group, int checkedId) {
                 switch(checkedId){
                     case R.id.ButtonA:
-                        holder.correct = "A";
+                        chosen.add(position,question.getA());
                         break;
                     case R.id.ButtonB:
-                        holder.correct = "B";
+                        chosen.add(position,question.getB());
                         break;
                     case R.id.ButtonC:
-                        holder.correct = "C";
+                        chosen.add(position,question.getC());
                         break;
                     case R.id.ButtonD:
-                        holder.correct = "D";
+                        chosen.add(position,question.getD());
                         break;
                 }
             }

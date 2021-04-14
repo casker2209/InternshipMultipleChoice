@@ -35,10 +35,9 @@
             android:background="@drawable/left"
             android:id="@+id/goBefore"></Button>
             <TextView
-                android:layout_width="40dp"
-
+                android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:textSize="15sp"
+                android:textSize="20sp"
                 android:gravity="center"
                 android:id="@+id/QuestionPage"></TextView>
             <Button
@@ -60,8 +59,9 @@
         android:text="Finish"
         android:id="@+id/finishButton"></Button>
     <TextView
+        android:layout_below="@+id/finishButton"
         android:layout_width="match_parent"
-        android:layout_height="200dp"
+        android:layout_height="100dp"
         android:layout_alignParentBottom="true"
         android:gravity="center"
         android:id="@+id/Timer"

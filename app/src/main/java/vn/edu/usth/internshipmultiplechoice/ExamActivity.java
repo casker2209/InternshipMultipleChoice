@@ -39,6 +39,7 @@ public class ExamActivity extends AppCompatActivity {
     TextView Timer;
     Button goBefore,goAfter,finishButton;
     String timer;
+    List<Question> Correct,Wrong;
     CountDownTimer countDownTimer;
     public void getQuestion(){
         RetrofitClient retrofitClient = RetrofitClient.getInstance();
@@ -61,16 +62,19 @@ public class ExamActivity extends AppCompatActivity {
         });
     }
 
-    public void getScore() {
+    public String getScore() {
         List<UserFragment> fragmentList = new ArrayList<>();
-        List<Question> Correct = new ArrayList<>();
-        List<Question> Wrong = new ArrayList<>();
+        Correct = new ArrayList<>();
+        Wrong = new ArrayList<>();
         for (int i = 0; i < adapterRecycler.getItemCount(); i++) {
+
+
             Question question = adapterRecycler.getQuestion(i);
-            String chosen = adapterRecycler.getCorrect(i);
+            String chosen = adapterRecycler.getChosen(i);
             if (chosen.equals(question.getQuestionCorrect())) {
                 Correct.add(question);
-            } else Wrong.add(question);
+            }
+            else Wrong.add(question);
 
         /*for(int i = 0;i< examAdapter.getItemCount();i++){
             ExamQuestionFragment fragment = (ExamQuestionFragment) getSupportFragmentManager().findFragmentByTag("f"+examAdapter.getItemId(i)+2);
@@ -114,15 +118,14 @@ public class ExamActivity extends AppCompatActivity {
             }
 
         }*/
-            System.out.println("Score:" + Correct.size() + "/" + adapterRecycler.getItemCount());
-
-
         }
+        return(Correct.size() + "/" + adapterRecycler.getItemCount());
     }
 
     public void finish(){
         Intent intent = new Intent(getBaseContext(),ExamFinishActivity.class);
-        getScore();
+        ExamHistory examHistory = new ExamHistory(exam,getScore(),Correct,Wrong);
+        intent.putExtra("exam result",examHistory);
         startActivity(intent);
 
     }
@@ -146,7 +149,14 @@ public class ExamActivity extends AppCompatActivity {
             public void onTick(long millisUntilFinished) {
                 long minutes = (millisUntilFinished / 1000) / 60;
                 long seconds = (millisUntilFinished / 1000) % 60;
-                Timer.setText(String.valueOf(minutes)+": "+String.valueOf(seconds));
+                String time;
+                if(seconds < 10){
+                     time = (String.valueOf(minutes)+": "+"0"+String.valueOf(seconds));
+                }
+                else{
+                     time = (String.valueOf(minutes)+": "+String.valueOf(seconds));
+                }
+                Timer.setText(time);
             }
 
             @Override
