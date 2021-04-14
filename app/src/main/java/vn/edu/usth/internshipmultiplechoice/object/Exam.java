@@ -1,11 +1,18 @@
 package vn.edu.usth.internshipmultiplechoice.object;
 
+import com.google.gson.annotations.SerializedName;
+
+import java.io.Serializable;
 import java.util.List;
 
-public class Exam {
+public class Exam implements Serializable {
+    @SerializedName("id")
     private String id;
+    @SerializedName("name")
     private String name;
+    @SerializedName("description")
     private String description;
+    @SerializedName("questionList")
     private List<Question> QuestionList;
 
     public String getId() {

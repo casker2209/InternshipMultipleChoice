@@ -4,6 +4,7 @@
     android:layout_height="match_parent"
     android:paddingTop="10dp"
     android:paddingBottom="10dp"
+    android:background="@drawable/customborder"
     android:orientation="vertical"
     >
     <RelativeLayout
@@ -16,41 +17,62 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_toLeftOf="@+id/ExamShow"
             android:gravity="center_vertical"
             android:id="@+id/ExamName"></TextView>
-        <Button
-            android:layout_width="40dp"
-            android:layout_height="match_parent"
-            android:layout_alignParentRight="true"
-            android:id="@+id/ExamShow"></Button>
     </RelativeLayout>
-    <TextView
+
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@android:color/darker_gray"/>
+
+    <LinearLayout
+        android:id="@+id/DescAndGo"
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:orientation="vertical"
         android:paddingLeft="10dp"
         android:paddingRight="10dp"
-        android:paddingTop="10dp"
-        android:paddingBottom="10dp"
-        android:layout_width="match_parent"
-        android:minHeight="60dp"
-        android:text="Dummy description"
-        android:layout_height="wrap_content"
-        android:id="@+id/Description"></TextView>
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="40dp"
-        android:paddingLeft="10dp"
-        android:paddingRight="10dp">
-        <Button
-            android:layout_width="40dp"
-            android:layout_height="match_parent"
-            android:id="@+id/goExam"
-            android:layout_alignParentRight="true"></Button>
+
+        >
+
         <TextView
+            android:id="@+id/Description"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_toLeftOf="@+id/goExam"
-            android:text="Start"
-            android:gravity="center_vertical"></TextView>
-    </RelativeLayout>
+            android:layout_height="wrap_content"
+            android:minHeight="60dp"
+            android:paddingTop="10dp"
+            android:paddingBottom="10dp"
+            android:text="Dummy description"></TextView>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@android:color/darker_gray" />
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="40dp">
+
+            <Button
+                android:id="@+id/goExam"
+                android:layout_width="40dp"
+                android:layout_height="match_parent"
+                android:layout_alignParentRight="true"></Button>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_toLeftOf="@+id/goExam"
+                android:gravity="center_vertical"
+                android:text="Start"></TextView>
+        </RelativeLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@android:color/darker_gray" />
+    </LinearLayout>
 
 </LinearLayout>

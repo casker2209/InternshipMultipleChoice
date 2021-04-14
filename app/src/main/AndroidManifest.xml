@@ -13,7 +13,8 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".ExamListActivity"></activity>
+        <activity android:name=".ExamFinishActivity"></activity>
+        <activity android:name=".ExamListActivity" />
         <activity android:name=".ExamActivity" />
         <activity android:name=".SignupActivity" />
         <!--

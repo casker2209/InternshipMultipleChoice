@@ -1,8 +1,71 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.recyclerview.widget.RecyclerView xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ExamActivity">
 
-</androidx.recyclerview.widget.RecyclerView>
+    tools:context=".ExamActivity">
+    <com.google.android.material.tabs.TabLayout
+        android:layout_alignParentTop="true"
+        android:id="@+id/tab_layout"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"/>
+
+    <androidx.viewpager2.widget.ViewPager2
+        android:id="@+id/viewpager"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+    <RelativeLayout
+        android:layout_below="@+id/viewpager"
+        android:id="@+id/PageLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:id="@+id/forScroll"
+            android:paddingTop="10dp"
+            android:paddingBottom="10dp"
+            android:orientation="horizontal">
+        <Button
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_marginRight="10dp"
+            android:background="@drawable/left"
+            android:id="@+id/goBefore"></Button>
+            <TextView
+                android:layout_width="40dp"
+
+                android:layout_height="match_parent"
+                android:textSize="15sp"
+                android:gravity="center"
+                android:id="@+id/QuestionPage"></TextView>
+            <Button
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:layout_marginLeft="10dp"
+
+                android:background="@drawable/right"
+                android:id="@+id/goAfter"></Button>
+        </LinearLayout>
+
+    </RelativeLayout>
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="40dp"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="10dp"
+        android:layout_below="@+id/PageLayout"
+        android:text="Finish"
+        android:id="@+id/finishButton"></Button>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:layout_alignParentBottom="true"
+        android:gravity="center"
+        android:id="@+id/Timer"
+        android:textSize="30sp">
+
+    </TextView>
+</RelativeLayout>

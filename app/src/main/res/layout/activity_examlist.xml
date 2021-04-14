@@ -1,11 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.recyclerview.widget.RecyclerView xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    tools:context=".ExamListActivity"
+    android:orientation="horizontal">
+<androidx.recyclerview.widget.RecyclerView
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
     android:paddingTop="20dp"
-    android:paddingLeft="20dp"
-    tools:context=".ExamListActivity">
+    android:paddingRight="20dp"
 
-</androidx.recyclerview.widget.RecyclerView>
+    android:paddingBottom="20dp"
+    android:paddingLeft="20dp"
+    android:id="@+id/RecyclerViewExamList"></androidx.recyclerview.widget.RecyclerView>
+</LinearLayout>

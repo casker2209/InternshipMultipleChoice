@@ -13,7 +13,7 @@ import retrofit2.http.POST;
 
 public interface UserService {
 
-    String Endpoint = "https://10.0.2.2:6789";
+    String Endpoint = "https://192.168.1.8:6789";
     @Headers("Content-Type: application/json")
     @POST("/api/auth/signin")
     Call<ResponseBody> getUserInfo(@Body String body);

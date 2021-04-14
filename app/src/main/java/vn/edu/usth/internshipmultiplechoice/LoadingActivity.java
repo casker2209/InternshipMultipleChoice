@@ -39,7 +39,6 @@ public class LoadingActivity extends AppCompatActivity {
         contentText = findViewById(R.id.loadingcontent);
         retrofit = RetrofitClient.getInstance();
         if(getIntent().getBooleanExtra("isGuest",false)) {
-            getExamList();
             Intent intent = new Intent(getApplicationContext(),MainActivity.class);
             intent.putExtra("isGuest",true);
             startActivity(intent);
@@ -72,7 +71,6 @@ public class LoadingActivity extends AppCompatActivity {
                         String token = result.getString("accessToken");
                         userInfo = new UserInfo(id, username, email, token);
                         System.out.println("Successfuly download the user information");
-                        getExamList();
                     } catch (JSONException e) {
                         e.printStackTrace();
                         startActivity(new Intent(getApplicationContext(), LoginActivity.class));
@@ -94,25 +92,4 @@ public class LoadingActivity extends AppCompatActivity {
     }
 
 
-
-    private void getExamList(){
-        contentText.setText("Getting the list of the exam");
-        Call<List<JSONObject>> ExamList = retrofit.getMyApi().getAllExam();
-        ExamList.enqueue(new Callback<List<JSONObject>>() {
-            @Override
-            public void onResponse(Call<List<JSONObject>> call, Response<List<JSONObject>> response) {
-                System.out.println("Download successfully the examlist");
-                System.out.println("Log in success");
-
-                Intent intent = new Intent(getApplicationContext(),LoginActivity.class);
-                startActivity(intent);
-            }
-
-            @Override
-            public void onFailure(Call<List<JSONObject>> call, Throwable t) {
-                t.getStackTrace();
-                startActivity(new Intent(getApplicationContext(),LoginActivity.class));
-            }
-        });
-    }
 }

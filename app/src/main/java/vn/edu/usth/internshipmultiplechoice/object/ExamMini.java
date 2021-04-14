@@ -1,8 +1,13 @@
 package vn.edu.usth.internshipmultiplechoice.object;
 
+import com.google.gson.annotations.SerializedName;
+
 public class ExamMini {
+    @SerializedName("id")
     String id;
+    @SerializedName("name")
     String name;
+    @SerializedName("description")
     String description;
     public String getId() {
         return id;

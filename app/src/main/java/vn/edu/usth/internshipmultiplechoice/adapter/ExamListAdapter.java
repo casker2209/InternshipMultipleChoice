@@ -1,10 +1,12 @@
 package vn.edu.usth.internshipmultiplechoice.adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -12,58 +14,84 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.List;
 
+import vn.edu.usth.internshipmultiplechoice.ExamActivity;
 import vn.edu.usth.internshipmultiplechoice.R;
 import vn.edu.usth.internshipmultiplechoice.object.ExamMini;
 import vn.edu.usth.internshipmultiplechoice.retrofit.RetrofitClient;
 
-public class ExamListAdapter extends RecyclerView.Adapter {
+public class ExamListAdapter extends RecyclerView.Adapter<ExamListAdapter.ViewHolder> {
     List<ExamMini> examList;
     Context context;
-    public ExamListAdapter(List examList,Context context){
+
+    public ExamListAdapter(List examList, Context context) {
         this.examList = examList;
         this.context = context;
     }
+
+
     @NonNull
     @Override
-    public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public ExamListAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         Context context = parent.getContext();
         LayoutInflater inflater = LayoutInflater.from(context);
         View ExamView = inflater.inflate(R.layout.item_examlist, parent, false);
 
-        ViewHolder viewHolder = new ViewHolder(ExamView);
+        ExamListAdapter.ViewHolder viewHolder = new ExamListAdapter.ViewHolder(ExamView);
         return viewHolder;
     }
 
     @Override
-    public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull ExamListAdapter.ViewHolder holder, int position) {
         ExamMini examMini = examList.get(position);
-        
+        holder.descView.setText(examList.get(position).getDescription());
+        holder.nameView.setText(examList.get(position).getName());
+        holder.Go.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(context,ExamActivity.class);
+                intent.putExtra("id",examMini.getId());
+                context.startActivity(intent);
+            }
+        });
     }
+
 
     @Override
     public int getItemCount() {
         return examList.size();
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder{
+    public class ViewHolder extends RecyclerView.ViewHolder {
         private TextView nameView;
         private TextView descView;
-        private Button examShow;
+        private LinearLayout DescAndGo;
         private Button Go;
-        public ViewHolder(View itemView)
-        {
+        public boolean checkSize(){
+            int height = descView.getHeight();
+            if(height!=0){
+                return true;
+            }
+            else{
+                return false;
+            }
+        }
+        public ViewHolder(View itemView) {
             super(itemView);
             nameView = itemView.findViewById(R.id.ExamName);
             descView = itemView.findViewById(R.id.Description);
-            examShow = itemView.findViewById(R.id.ExamShow);
+            DescAndGo = itemView.findViewById(R.id.DescAndGo);
             Go = itemView.findViewById(R.id.goExam);
-            Go.setOnClickListener(new View.OnClickListener() {
-                @Override
+            nameView.setOnClickListener(new View.OnClickListener() {
                 public void onClick(View v) {
-
+                    if(checkSize()){
+                        DescAndGo.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,0));
+                    }
+                    else{
+                        DescAndGo.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,LinearLayout.LayoutParams.WRAP_CONTENT));
+                    }
                 }
             });
         }
     }
-
 }
+

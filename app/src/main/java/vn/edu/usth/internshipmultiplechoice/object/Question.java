@@ -1,11 +1,21 @@
 package vn.edu.usth.internshipmultiplechoice.object;
 
-public class Question {
+import com.google.gson.annotations.SerializedName;
+
+import java.io.Serializable;
+
+public class Question implements Serializable {
+    @SerializedName("question")
     private String name;
+    @SerializedName("a")
     private String A;
+    @SerializedName("b")
     private String B;
+    @SerializedName("c")
     private String C;
+    @SerializedName("d")
     private String D;
+    @SerializedName("questionCorrect")
     private String questionCorrect;
 
     public String getName() {
@@ -27,7 +37,12 @@ public class Question {
     public String getD() {
         return D;
     }
-    public Question(String name,String A,String B,String C,String D,String questionCorrect){
+
+    public String getQuestionCorrect() {
+        return questionCorrect;
+    }
+
+    public Question(String name, String A, String B, String C, String D, String questionCorrect){
         this.name = name;
         this.questionCorrect = questionCorrect;
         this.A = A;
