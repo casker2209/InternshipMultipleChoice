@@ -4,26 +4,20 @@
     android:layout_height="match_parent"
     android:background="@drawable/customborder"
     android:orientation="vertical"
-    android:paddingLeft="20dp"
-    android:paddingTop="20dp"
-    android:paddingRight="20dp"
-    android:paddingBottom="20dp">
+    android:paddingTop="10dp">
 
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:background="@android:color/darker_gray" />
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="120dp"
-        android:orientation="vertical"
-        android:paddingBottom="20dp">
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
 
         <TextView
             android:id="@+id/QuestionNum"
             android:layout_width="match_parent"
-            android:layout_height="40dp"
+            android:layout_height="30dp"
+            android:paddingLeft="20dp"
+            android:paddingRight="20dp"
             android:gravity="center_vertical"
             android:text="Question"></TextView>
 
@@ -34,9 +28,12 @@
 
         <TextView
             android:id="@+id/QuestionName"
+            android:paddingLeft="20dp"
+            android:paddingRight="20dp"
+            android:paddingTop="5dp"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:gravity="center_vertical"
+            android:minHeight="60dp"
+            android:layout_height="wrap_content"
             android:text="QuestionName">
 
         </TextView>
@@ -47,11 +44,6 @@
             android:background="@android:color/darker_gray" />
 
     </LinearLayout>
-
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:background="@android:color/darker_gray" />
 
     <RelativeLayout
         android:layout_width="wrap_content"
@@ -71,7 +63,10 @@
             <TextView
                 android:id="@+id/TextA"
                 android:layout_width="match_parent"
-                android:layout_height="40dp"
+                android:layout_height="30dp"
+                android:paddingLeft="20dp"
+                android:paddingRight="20dp"
+                android:text="A"
                 android:gravity="center_vertical"></TextView>
 
             <View
@@ -82,8 +77,10 @@
             <TextView
                 android:id="@+id/TextB"
                 android:layout_width="match_parent"
-                android:layout_height="40dp"
-                android:gravity="center_vertical"></TextView>
+                android:layout_height="30dp"
+                android:paddingLeft="20dp"
+                android:paddingRight="20dp"
+                android:text="A"                android:gravity="center_vertical"></TextView>
 
             <View
                 android:layout_width="match_parent"
@@ -93,8 +90,10 @@
             <TextView
                 android:id="@+id/TextC"
                 android:layout_width="match_parent"
-                android:layout_height="40dp"
-                android:gravity="center_vertical"></TextView>
+                android:layout_height="30dp"
+                android:paddingLeft="20dp"
+                android:paddingRight="20dp"
+                android:text="A"                android:gravity="center_vertical"></TextView>
 
             <View
                 android:layout_width="match_parent"
@@ -104,8 +103,10 @@
             <TextView
                 android:id="@+id/TextD"
                 android:layout_width="match_parent"
-                android:layout_height="40dp"
-                android:gravity="center_vertical"></TextView>
+                android:layout_height="30dp"
+                android:paddingLeft="20dp"
+                android:paddingRight="20dp"
+                android:text="A"                android:gravity="center_vertical"></TextView>
 
             <View
                 android:layout_width="match_parent"
@@ -126,7 +127,6 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:checked="true"
                 android:text="A"></RadioButton>
 
             <RadioButton

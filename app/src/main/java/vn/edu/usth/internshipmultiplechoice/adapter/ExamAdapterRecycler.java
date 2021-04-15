@@ -27,7 +27,7 @@ public class ExamAdapterRecycler extends RecyclerView.Adapter<ExamAdapterRecycle
         this.exam = exam;
         this.chosen = new ArrayList<>();
         for(int i = 0;i<exam.getQuestionList().size();i++){
-            chosen.add(exam.getQuestionList().get(i).getA());
+            chosen.add("Not chosen");
         }
     }
 
@@ -56,23 +56,41 @@ public class ExamAdapterRecycler extends RecyclerView.Adapter<ExamAdapterRecycle
         holder.D.setText("D: "+question.getD());
         holder.Name.setText(question.getName());
         holder.Num.setText("Question "+String.valueOf(position+1));
-
+        switch(chosen.get(position)){
+            case "A":
+                holder.ButtonA.setChecked(true);
+                break;
+            case "B":
+                holder.ButtonB.setChecked(true);
+                break;
+            case "C":
+                holder.ButtonC.setChecked(true);
+                break;
+            case "D":
+                holder.ButtonD.setChecked(true);
+                break;
+            default:
+                break;
+        }
         holder.buttonGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(RadioGroup group, int checkedId) {
                 switch(checkedId){
                     case R.id.ButtonA:
-                        chosen.add(position,question.getA());
+                        chosen.add(position,"A");
                         break;
                     case R.id.ButtonB:
-                        chosen.add(position,question.getB());
+                        chosen.add(position,"B");
                         break;
                     case R.id.ButtonC:
-                        chosen.add(position,question.getC());
+                        chosen.add(position,"C");
                         break;
                     case R.id.ButtonD:
-                        chosen.add(position,question.getD());
+                        chosen.add(position,"D");
                         break;
+                    default:{
+                        break;
+                    }
                 }
             }
         });
@@ -94,6 +112,7 @@ public class ExamAdapterRecycler extends RecyclerView.Adapter<ExamAdapterRecycle
         String correct;
         public ViewHolder(@NonNull View view) {
             super(view);
+            this.setIsRecyclable(false);
             A = view.findViewById(R.id.TextA);
             B = view.findViewById(R.id.TextB);
             C = view.findViewById(R.id.TextC);

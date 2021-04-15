@@ -37,7 +37,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:textSize="20sp"
+                android:textSize="15sp"
                 android:gravity="center"
                 android:id="@+id/QuestionPage"></TextView>
             <Button
@@ -58,13 +58,13 @@
         android:layout_below="@+id/PageLayout"
         android:text="Finish"
         android:id="@+id/finishButton"></Button>
+
     <TextView
-        android:layout_below="@+id/finishButton"
-        android:layout_width="match_parent"
-        android:layout_height="100dp"
-        android:layout_alignParentBottom="true"
-        android:gravity="center"
         android:id="@+id/Timer"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_below="@+id/finishButton"
+        android:gravity="center"
         android:textSize="30sp">
 
     </TextView>

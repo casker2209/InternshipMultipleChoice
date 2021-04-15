@@ -41,6 +41,7 @@ public class ExamActivity extends AppCompatActivity {
     String timer;
     List<Question> Correct,Wrong;
     CountDownTimer countDownTimer;
+    List<String> IncorrectChosen;
     public void getQuestion(){
         RetrofitClient retrofitClient = RetrofitClient.getInstance();
         String id = getIntent().getStringExtra("id");
@@ -66,15 +67,17 @@ public class ExamActivity extends AppCompatActivity {
         List<UserFragment> fragmentList = new ArrayList<>();
         Correct = new ArrayList<>();
         Wrong = new ArrayList<>();
+        IncorrectChosen = new ArrayList<>();
         for (int i = 0; i < adapterRecycler.getItemCount(); i++) {
-
-
             Question question = adapterRecycler.getQuestion(i);
             String chosen = adapterRecycler.getChosen(i);
             if (chosen.equals(question.getQuestionCorrect())) {
                 Correct.add(question);
             }
-            else Wrong.add(question);
+            else {
+                Wrong.add(question);
+                IncorrectChosen.add(chosen);
+            }
 
         /*for(int i = 0;i< examAdapter.getItemCount();i++){
             ExamQuestionFragment fragment = (ExamQuestionFragment) getSupportFragmentManager().findFragmentByTag("f"+examAdapter.getItemId(i)+2);
@@ -119,12 +122,13 @@ public class ExamActivity extends AppCompatActivity {
 
         }*/
         }
+        System.out.println("Score: "+ Correct.size() + "/" + adapterRecycler.getItemCount());
         return(Correct.size() + "/" + adapterRecycler.getItemCount());
     }
 
     public void finish(){
         Intent intent = new Intent(getBaseContext(),ExamFinishActivity.class);
-        ExamHistory examHistory = new ExamHistory(exam,getScore(),Correct,Wrong);
+        ExamHistory examHistory = new ExamHistory(exam,getScore(),Correct,Wrong,IncorrectChosen);
         intent.putExtra("exam result",examHistory);
         startActivity(intent);
 
