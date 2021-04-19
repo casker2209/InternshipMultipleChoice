@@ -10,4 +10,17 @@
     <string name="title_activity_loading">LoadingActivity</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="correct_size_zero">Đúng</string>
+    <string name="correct_show">Đúng (Bấm để hiển thị)</string>
+    <string name="correct_hide">Đúng (Bấm để dừng hiển thị)</string>
+
+    <string name="incorrect_size_zero">Sai</string>
+    <string name="incorrect_show">Sai (Bấm để hiển thị)</string>
+    <string name="incorrect_hide">Sai (Bấm để dừng hiển thị)</string>
+
+
+    <string name="notchosen_size_zero">Chưa làm</string>
+    <string name="notchosen_show">Chưa làm (Bấm để hiển thị)</string>
+    <string name="notchosen_hide">Chưa làm (Bấm để dừng hiển thị)</string>
+    <string name="score">Điểm</string>
 </resources>

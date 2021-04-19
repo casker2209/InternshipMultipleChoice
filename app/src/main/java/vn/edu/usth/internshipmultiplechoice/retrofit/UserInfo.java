@@ -1,15 +1,26 @@
 package vn.edu.usth.internshipmultiplechoice.retrofit;
 
-public class UserInfo {
+import com.google.gson.annotations.SerializedName;
+
+import java.io.Serializable;
+
+public class UserInfo implements Serializable {
+    @SerializedName("id")
     private String id;
-    private String username;
+    @SerializedName("email")
     private String email;
+    @SerializedName("accessToken")
     private String accessToken;
-    public UserInfo(String id,String username,String email,String accessToken){
+    @SerializedName("username")
+    private String username;
+    @SerializedName("name")
+    private String name;
+    public UserInfo(String id,String username,String email,String accessToken,String name){
         this.id = id;
         this.username = username;
         this.email = email;
         this.accessToken = accessToken;
+        this.name = name;
     }
 
     public String getId() {
@@ -25,5 +36,9 @@ public class UserInfo {
 
     public String getUsername() {
         return username;
+    }
+
+    public String getName() {
+        return name;
     }
 }

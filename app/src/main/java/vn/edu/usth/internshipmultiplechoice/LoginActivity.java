@@ -70,7 +70,7 @@ public class LoginActivity extends AppCompatActivity {
                 String password = passwordBox.getText().toString();
                 if (user.isEmpty() || password.isEmpty()) {
                     Log.e("Login failed", "Username/password not filled in");
-                    Toast.makeText(getBaseContext(), "Username/password not filled in", Toast.LENGTH_LONG);
+                    Toast.makeText(getBaseContext(), "Bạn chưa điền tài khoản hoặc mật khẩu", Toast.LENGTH_LONG).show();
                 } else {
                     Log.e("Clicked", "Clicked");
                     String namepassed = usernameBox.getText().toString();

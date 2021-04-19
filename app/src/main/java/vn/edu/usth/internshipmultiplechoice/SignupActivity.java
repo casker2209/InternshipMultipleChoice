@@ -9,13 +9,18 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.google.gson.JsonObject;
+
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import java.io.IOException;
 
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 import vn.edu.usth.internshipmultiplechoice.retrofit.RetrofitClient;
+import vn.edu.usth.internshipmultiplechoice.retrofit.SignupRequest;
 
 public class SignupActivity extends AppCompatActivity {
     private EditText namebox;
@@ -30,8 +35,8 @@ public class SignupActivity extends AppCompatActivity {
         retrofit = RetrofitClient.getInstance();
         setContentView(R.layout.activity_signup);
         namebox = findViewById(R.id.namebox);
-        usernamebox = findViewById(R.id.namebox);
-        emailbox = findViewById(R.id.namebox);
+        usernamebox = findViewById(R.id.usernamebox);
+        emailbox = findViewById(R.id.emailbox);
         passwordbox = findViewById(R.id.passwordbox);
         signinbutton = findViewById(R.id.signinbutton);
         signinbutton.setOnClickListener(new View.OnClickListener() {
@@ -41,34 +46,45 @@ public class SignupActivity extends AppCompatActivity {
                 passwordbox.getText().toString().isEmpty()&&
                 emailbox.getText().toString().isEmpty())){
                 JSONObject jsonObject = new JSONObject();
-                try {
-                    jsonObject.put("username",usernamebox.getText().toString());
-                    jsonObject.put("password",passwordbox.getText().toString());
-                    jsonObject.put("email",emailbox.getText().toString());
-                    jsonObject.put("roles","user");
-                    Call<String> signup = retrofit.getMyApi().Signup(jsonObject);
-                    signup.enqueue(new Callback<String>() {
+                SignupRequest signupRequest = new SignupRequest(usernamebox.getText().toString(),passwordbox.getText().toString(),emailbox.getText().toString(),namebox.getText().toString());
+                    Call<JsonObject> signup = retrofit.getMyApi().Signup(signupRequest);
+                    signup.enqueue(new Callback<JsonObject>() {
                         @Override
-                        public void onResponse(Call<String> call, Response<String> response) {
+                        public void onResponse(Call<JsonObject> call, Response<JsonObject> response) {
                             if(response.code()==200){
-                            System.out.println(response.body());
-                            startActivity(new Intent(getApplicationContext(),LoginActivity.class));}
+                                System.out.println(response.body().get("message").getAsString());
+                                Toast.makeText(SignupActivity.this,response.body().get("message").getAsString(),Toast.LENGTH_LONG).show();
+
+                                startActivity(new Intent(SignupActivity.this,LoginActivity.class));
+                            finish();
+                            }
                             else{
-                                System.out.println(response.code());
-                                System.out.println(response.errorBody()); }
+                                String error = null;
+                                try {
+                                    error = response.errorBody().string();
+                                } catch (IOException e) {
+                                    e.printStackTrace();
+                                }
+
+                                System.out.println(error);
+                                JSONObject errorObj;
+                                try {
+                                     errorObj = new JSONObject(error);
+                                    Toast.makeText(SignupActivity.this,errorObj.getString("message"),Toast.LENGTH_LONG).show();
+                                } catch (JSONException e) {
+                                    e.printStackTrace();
+                                }
+                            }
                         }
 
                         @Override
-                        public void onFailure(Call<String> call, Throwable t) {
+                        public void onFailure(Call<JsonObject> call, Throwable t) {
                             t.printStackTrace();
                         }
                     });
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
 
             } else{
-                    Toast.makeText(getBaseContext(),"Unfilled field(s)",Toast.LENGTH_LONG);
+                    Toast.makeText(SignupActivity.this,"Unfilled field(s)",Toast.LENGTH_LONG).show();
                 }
     }
 });}}

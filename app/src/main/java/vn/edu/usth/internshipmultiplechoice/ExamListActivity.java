@@ -55,9 +55,7 @@ public class ExamListActivity extends AppCompatActivity {
         examCall.enqueue(new Callback<List<ExamMini>>() {
             @Override
             public void onResponse(Call<List<ExamMini>> call, Response<List<ExamMini>> response) {
-                examList = response.body();
-                System.out.println("Succeed");
-                System.out.println(response.body().get(0).getName());
+                examList = response.body();;
                 init();
             }
 

@@ -7,15 +7,19 @@ import java.util.List;
 public class ExamHistory implements Serializable {
     private Exam exam;
     private String score;
-    List<Question> questionRight;
-    List<Question> questionWrong;
+    List<Question> questionRight,questionWrong,questionNotChosen; 
     List<String> IncorrectChosen;
-    public ExamHistory(Exam exam,String score,List<Question> questionRight,List<Question> questionWrong,List<String> IncorrectChosen){
+    public ExamHistory(Exam exam,String score,List<Question> questionRight,List<Question> questionWrong,List<String> IncorrectChosen,List<Question> questionNotChosen){
         this.exam = exam;
         this.score = score;
         this.questionRight = questionRight;
         this.questionWrong = questionWrong;
         this.IncorrectChosen = IncorrectChosen;
+        this.questionNotChosen = questionNotChosen;
+    }
+
+    public List<Question> getQuestionNotChosen() {
+        return questionNotChosen;
     }
 
     public Exam getExam() {
@@ -58,4 +62,7 @@ public class ExamHistory implements Serializable {
         this.questionWrong = questionWrong;
     }
 
+    public void setQuestionNotChosen(List<Question> questionNotChosen) {
+        this.questionNotChosen = questionNotChosen;
+    }
 }

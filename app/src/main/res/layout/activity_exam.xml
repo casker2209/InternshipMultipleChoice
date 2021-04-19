@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".ExamActivity">
     <com.google.android.material.tabs.TabLayout
         android:layout_alignParentTop="true"
@@ -58,9 +58,45 @@
         android:layout_below="@+id/PageLayout"
         android:text="Finish"
         android:id="@+id/finishButton"></Button>
+    <androidx.coordinatorlayout.widget.CoordinatorLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_below="@+id/Timer"
+
+        >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/shortcut_layout"
+            android:orientation="vertical"
+            app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior"
+            app:behavior_hideable="false"
+            app:behavior_peekHeight="50dp">
 
     <TextView
+        android:id="@+id/hasDone"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:text="Has done"
+        android:background="@android:color/holo_blue_bright"
+        android:gravity="center"
+        android:textSize="20sp">
+
+    </TextView>
+            <androidx.recyclerview.widget.RecyclerView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/shortcut"
+                android:paddingLeft="10dp"
+                >
+            </androidx.recyclerview.widget.RecyclerView>
+        </LinearLayout>
+    </androidx.coordinatorlayout.widget.CoordinatorLayout>
+    <TextView
         android:id="@+id/Timer"
+        android:text="Timer"
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:layout_below="@+id/finishButton"

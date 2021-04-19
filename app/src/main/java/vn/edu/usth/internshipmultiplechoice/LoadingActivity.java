@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.os.Parcelable;
 import android.util.Log;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -15,8 +16,11 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Set;
 
 import okhttp3.ResponseBody;
 import retrofit2.Call;
@@ -39,9 +43,10 @@ public class LoadingActivity extends AppCompatActivity {
         contentText = findViewById(R.id.loadingcontent);
         retrofit = RetrofitClient.getInstance();
         if(getIntent().getBooleanExtra("isGuest",false)) {
-            Intent intent = new Intent(getApplicationContext(),MainActivity.class);
+            Intent intent = new Intent(getApplicationContext(),MenuActivity.class);
             intent.putExtra("isGuest",true);
             startActivity(intent);
+            finish();
         }
         else{
             try {
@@ -58,33 +63,48 @@ public class LoadingActivity extends AppCompatActivity {
         forLogin.put("username",intent.getStringExtra("username"));
         forLogin.put("password",intent.getStringExtra("password"));
         Log.e("Json",forLogin.toString());
-        Call<JSONObject> LoginResponse =  retrofit.getMyApi().Login(new LoginRequest(intent.getStringExtra("username"),intent.getStringExtra("password")));
-        LoginResponse.enqueue(new Callback<JSONObject>() {
+        Call<JsonObject> LoginResponse =  retrofit.getMyApi().Login(new LoginRequest(intent.getStringExtra("username"),intent.getStringExtra("password")));
+        LoginResponse.enqueue(new Callback<JsonObject>() {
             @Override
-            public void onResponse(Call<JSONObject> call, Response<JSONObject> response) {
-                JSONObject result = response.body();
+            public void onResponse(Call<JsonObject> call, Response<JsonObject> response) {
+                JsonObject result = response.body();
                 if (response.code() == 200) {
-                    try {
-                        String id = result.getString("id");
-                        String email = result.getString("email");
-                        String username = result.getString("username");
-                        String token = result.getString("accessToken");
-                        userInfo = new UserInfo(id, username, email, token);
-                        System.out.println("Successfuly download the user information");
-                    } catch (JSONException e) {
-                        e.printStackTrace();
-                        startActivity(new Intent(getApplicationContext(), LoginActivity.class));
-                    }
+                    System.out.println("Success getting the response");
+                    String id = result.get("id").getAsString();
+                    String email = result.get("email").getAsString();
+                    String username = result.get("username").getAsString();
+                    String token = result.get("tokenType").getAsString() + result.get("accessToken").getAsString();
+                    String name = result.get("name").getAsString();
+                    UserInfo userInfo = new UserInfo(id,username,email,token,name);
+                    Intent intent = new Intent(LoadingActivity.this,MenuActivity.class);
+                    intent.putExtra("User Info",userInfo);
+                    intent.putExtra("isGuest",false);
+                    startActivity(intent);
+                    finish();
                 }
             else{
-                Log.e("error","Something wrong");
-                Log.e("error", String.valueOf(response.body()));
-                Log.e("error",String.valueOf(response.code()));
+                    String error = null;
+                    try {
+                        error = response.errorBody().string();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+
+                    System.out.println(error);
+                    JSONObject errorObj;
+                    try {
+                        errorObj = new JSONObject(error);
+                        Toast.makeText(LoadingActivity.this,errorObj.getString("message"),Toast.LENGTH_LONG).show();
+                        startActivity(new Intent(LoadingActivity.this,LoginActivity.class));
+                        finish();
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
                 }
             }
 
             @Override
-            public void onFailure(Call<JSONObject> call, Throwable t) {
+            public void onFailure(Call<JsonObject> call, Throwable t) {
                 t.getStackTrace();
                 startActivity(new Intent(getApplicationContext(),LoginActivity.class));
             }
