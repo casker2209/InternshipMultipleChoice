@@ -14,6 +14,7 @@ import android.widget.TextView;
 import vn.edu.usth.internshipmultiplechoice.adapter.CorrectAnsAdapter;
 import vn.edu.usth.internshipmultiplechoice.adapter.IncorrectAnsAdapter;
 import vn.edu.usth.internshipmultiplechoice.object.ExamHistory;
+import vn.edu.usth.internshipmultiplechoice.retrofit.RetrofitClient;
 
 public class ExamFinishActivity extends AppCompatActivity {
     TextView ExamName,ExamDescription,ExamScore,RightQuestionShow,WrongQuestionShow,NotChosenShow,RedoExam;
@@ -24,20 +25,12 @@ public class ExamFinishActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_exam_finish);
         init();
-        CountDownTimer countDownTimer = new CountDownTimer(1000*10,1000) {
-            @Override
-            public void onTick(long millisUntilFinished) {
-                System.out.println(millisUntilFinished);
-            }
+        sendHistory();
+    }
 
-            @Override
-            public void onFinish() {
-                Intent intent = new Intent(ExamFinishActivity.this,ExamHistoryActivity.class);
-                intent.putExtra("Exam",examHistory);
-                startActivity(intent);
-            }
-        };
-        countDownTimer.start();
+    public void sendHistory(){
+        RetrofitClient retrofit = RetrofitClient.getInstance();
+        Call<String> stringResponse = retrofit.getMyApi().sendExam()
     }
 
     public void init() {

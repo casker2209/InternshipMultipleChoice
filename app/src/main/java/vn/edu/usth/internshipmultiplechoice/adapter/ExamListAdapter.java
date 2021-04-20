@@ -1,5 +1,6 @@
 package vn.edu.usth.internshipmultiplechoice.adapter;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.view.LayoutInflater;
@@ -50,6 +51,7 @@ public class ExamListAdapter extends RecyclerView.Adapter<ExamListAdapter.ViewHo
             public void onClick(View v) {
                 Intent intent = new Intent(context,ExamActivity.class);
                 intent.putExtra("id",examMini.getId());
+                intent.putExtra("user id", ((Activity) context).getIntent().getStringExtra("user id"));
                 context.startActivity(intent);
             }
         });

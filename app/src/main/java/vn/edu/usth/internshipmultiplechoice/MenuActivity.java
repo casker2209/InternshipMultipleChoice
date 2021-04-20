@@ -27,7 +27,9 @@ public class MenuActivity extends AppCompatActivity {
         Logout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(MenuActivity.this,LoginActivity.class));
+                Intent intent = new Intent(MenuActivity.this,LoginActivity.class);
+                intent.putExtra("user id",userInfo.getId());
+                startActivity(intent);
                 finish();
             }
         });
