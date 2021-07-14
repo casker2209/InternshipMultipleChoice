@@ -38,9 +38,9 @@ public class ExamHistoryListAdapter extends RecyclerView.Adapter<ExamHistoryList
         ExamHistory examHistory = examHistoryList.get(position);
         holder.ExamName.setText(examHistory.getExam().getName());
         holder.ExamScore.setText(examHistory.getScore());
-        holder.CorrectRecyclerView.setAdapter(new CorrectAnsAdapter(examHistory.getQuestionRight(),context));
+        holder.CorrectRecyclerView.setAdapter(new CorrectAnsAdapter(examHistory.getQuestionRight(),context,true));
         holder.IncorrectRecyclerView.setAdapter(new IncorrectAnsAdapter(examHistory.getQuestionWrong(),examHistory.getIncorrectChosen(),context));
-        holder.NotChosenRecyclerView.setAdapter(new CorrectAnsAdapter(examHistory.getQuestionNotChosen(),context));
+        holder.NotChosenRecyclerView.setAdapter(new CorrectAnsAdapter(examHistory.getQuestionNotChosen(),context,false));
         holder.CorrectRecyclerView.setLayoutManager(new LinearLayoutManager(context));
         holder.IncorrectRecyclerView.setLayoutManager(new LinearLayoutManager(context));
         holder.NotChosenRecyclerView.setLayoutManager(new LinearLayoutManager(context));
@@ -53,13 +53,11 @@ public class ExamHistoryListAdapter extends RecyclerView.Adapter<ExamHistoryList
                         params.height = 0;
                         holder.CorrectRecyclerView.setLayoutParams(params);
                         holder.CorrectShow.setText(context.getString(R.string.correct_show));
-
                     } else {
                         ViewGroup.LayoutParams params = holder.CorrectRecyclerView.getLayoutParams();
-                        params.height = ViewGroup.LayoutParams.MATCH_PARENT;
+                        params.height = ViewGroup.LayoutParams.WRAP_CONTENT;
                         holder.CorrectRecyclerView.setLayoutParams(params);
                         holder.CorrectShow.setText(context.getString(R.string.correct_hide));
-
                     }
                 }
             });

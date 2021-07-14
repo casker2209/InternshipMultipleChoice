@@ -11,22 +11,28 @@ import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.GET;
+import retrofit2.http.Header;
 import retrofit2.http.Headers;
 import retrofit2.http.POST;
 import retrofit2.http.Path;
 import vn.edu.usth.internshipmultiplechoice.User;
+import vn.edu.usth.internshipmultiplechoice.object.Bank;
 import vn.edu.usth.internshipmultiplechoice.object.Exam;
 import vn.edu.usth.internshipmultiplechoice.object.ExamHistory;
 import vn.edu.usth.internshipmultiplechoice.object.ExamMini;
 
 public interface Api {
-    String URL = "http://192.168.100.3:6789";
+    String URL = "http:///192.168.1.10:6789";
     @Headers({"Content-Type: application/json","Accept: application/json","Access-Control-Allow-Credentials: true","Access-Control-Allow-Origin: true"})
     @POST("/api/auth/signin")
     Call<JsonObject> Login(@Body LoginRequest loginRequest);
     @Headers("Content-Type: application/json")
     @GET("/exam/")
     Call<List<ExamMini>> getAllExam();
+    @Headers("Content-Type: application/json")
+    @GET("/bank/")
+    Call<List<Bank>> getAllBank();
+
     @Headers({"Content-Type: application/json","Access-Control-Allow-Credentials: true","Access-Control-Allow-Origin: true"})
     @POST("/api/auth/signup")
     Call<JsonObject> Signup(@Body SignupRequest body);
@@ -35,6 +41,8 @@ public interface Api {
     Call<Exam> getExam(@Path("id") String id);
 
     @Headers("Content-Type: application/json")
-    @POST("/user/{id}/exam")
-    Call<ResponseBody> sendExam(@Path("id") String id, @Body ExamHistory examHistory);
+    @POST("/api/test/user/{id}/exam/")
+    Call<ResponseBody> sendExam(@Path("id") String id, @Body ExamHistory examHistory, @Header("Authorization") String accessToken);
+    @GET("/api/test/user/{id}/exam/all")
+    Call<List<ExamHistory>> getExamHistory(@Path("id") String id, @Header("Authorization") String accessToken);
 }

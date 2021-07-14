@@ -1,12 +1,15 @@
 package vn.edu.usth.internshipmultiplechoice.adapter;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.DividerItemDecoration;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.List;
@@ -17,8 +20,8 @@ import vn.edu.usth.internshipmultiplechoice.object.Question;
 public class IncorrectAnsAdapter extends RecyclerView.Adapter<IncorrectAnsAdapter.ViewHolder> {
     private List<Question> question;
     private Context context;
-    private List<String> chosen;
-    public IncorrectAnsAdapter(List<Question> question,List<String> chosen,Context context){
+    private List<List<String>> chosen;
+    public IncorrectAnsAdapter(List<Question> question,List<List<String>> chosen,Context context){
         this.question = question;
         this.context = context;
         this.chosen = chosen;
@@ -37,48 +40,17 @@ public class IncorrectAnsAdapter extends RecyclerView.Adapter<IncorrectAnsAdapte
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         Question _question = question.get(position);
-        String incorrect = chosen.get(position);
-        String chosen = _question.getQuestionCorrect();
+        List<String> incorrect = chosen.get(position);
         holder.QuestionName.setText(_question.getName());
-        switch(chosen){
-            case("A"):{
-                holder.QuestionCorrect.setText("A: "+_question.getA());
-                break;
-            }
-            case("B"):{
-                holder.QuestionCorrect.setText("B: "+_question.getB());
-                break;
-            }
-            case("C"):{
-                holder.QuestionCorrect.setText("C: "+_question.getC());
-                break;
-            }
-            case("D"):{
-                holder.QuestionCorrect.setText("D: "+_question.getD());
-                break;
-            }
-            default:break;
-        }
-        switch (incorrect){
-            case("A"):{
-                holder.QuestionIncorrect.setText("A: "+_question.getA());
-                break;
-            }
-            case("B"):{
-                holder.QuestionIncorrect.setText("B: "+_question.getB());
-                break;
-            }
-            case("C"):{
-                holder.QuestionIncorrect.setText("C: "+_question.getC());
-                break;
-            }
-            case("D"):{
-                holder.QuestionIncorrect.setText("D: "+_question.getD());
-                break;
-            }
-            default:break;
+        holder.QuestionCorrect.setAdapter(new AnswerAdapter(this.context,_question.getQuestionCorrect(),AnswerAdapter.Correct));
+        holder.QuestionIncorrect.setAdapter(new AnswerAdapter(this.context,incorrect,AnswerAdapter.Incorrect));
+        holder.QuestionCorrect.setLayoutManager(new LinearLayoutManager(this.context));
+        holder.QuestionIncorrect.setLayoutManager(new LinearLayoutManager(this.context));
+        holder.QuestionCorrect.addItemDecoration(new DividerItemDecoration(this.context, LinearLayoutManager.VERTICAL));
+        holder.QuestionIncorrect.addItemDecoration(new DividerItemDecoration(this.context, LinearLayoutManager.VERTICAL));
+        holder.QuestionIncorrect.setBackgroundColor(Color.RED);
+        holder.QuestionCorrect.setBackgroundColor(Color.GREEN);
 
-        }
 
     }
 
@@ -88,7 +60,8 @@ public class IncorrectAnsAdapter extends RecyclerView.Adapter<IncorrectAnsAdapte
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
-        private TextView QuestionCorrect,QuestionIncorrect,QuestionName;
+        private TextView QuestionName;
+        private RecyclerView QuestionCorrect,QuestionIncorrect;
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             QuestionCorrect = itemView.findViewById(R.id.CorrectAnswer);

@@ -21,6 +21,8 @@ import com.google.android.gms.common.api.GoogleApiClient;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.ArrayList;
+
 import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -30,6 +32,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 import vn.edu.usth.internshipmultiplechoice.retrofit.RetrofitClient;
 import vn.edu.usth.internshipmultiplechoice.retrofit.UserInfo;
 import vn.edu.usth.internshipmultiplechoice.retrofit.UserService;
+import vn.edu.usth.internshipmultiplechoice.utility.UserSharedPreferences;
 
 public class LoginActivity extends AppCompatActivity {
 
@@ -41,6 +44,12 @@ public class LoginActivity extends AppCompatActivity {
     private TextView login;
     private TextView signup;
     private TextView guest;
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 /*        GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
@@ -78,6 +87,8 @@ public class LoginActivity extends AppCompatActivity {
                     Intent intent = new Intent(getApplicationContext(), LoadingActivity.class);
                     intent.putExtra("username", namepassed);
                     intent.putExtra("password", passwordpassed);
+                    intent.putExtra("isLogin",true);
+
                     startActivity(intent);
                 }
                 ;
@@ -154,9 +165,9 @@ public class LoginActivity extends AppCompatActivity {
         guest.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getApplicationContext(), LoadingActivity.class);
-                intent.putExtra("isGuest",true);
+                Intent intent = new Intent(getApplicationContext(), MenuActivity.class);
                 startActivity(intent);
+                finish();
             }
         });
     }

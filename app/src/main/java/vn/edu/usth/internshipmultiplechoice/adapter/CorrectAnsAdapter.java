@@ -1,25 +1,31 @@
 package vn.edu.usth.internshipmultiplechoice.adapter;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.DividerItemDecoration;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.List;
 
+import vn.edu.usth.internshipmultiplechoice.ExamHistoryActivity;
 import vn.edu.usth.internshipmultiplechoice.R;
 import vn.edu.usth.internshipmultiplechoice.object.Question;
 
 public class CorrectAnsAdapter extends RecyclerView.Adapter<CorrectAnsAdapter.ViewHolder> {
     private List<Question> question;
     private Context context;
-    public CorrectAnsAdapter(List<Question> question, Context context){
+    private boolean isCorrect;
+    public CorrectAnsAdapter(List<Question> question, Context context,boolean isCorrect){
         this.question = question;
         this.context = context;
+        this.isCorrect = isCorrect;
     }
 
     @NonNull
@@ -36,27 +42,18 @@ public class CorrectAnsAdapter extends RecyclerView.Adapter<CorrectAnsAdapter.Vi
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         Question _question = question.get(position);
         holder.questionName.setText(_question.getName());
-        String chosen = _question.getQuestionCorrect();
-        switch(chosen){
-            case("A"):{
-                holder.correctView.setText("A: "+_question.getA());
-                break;
-            }
-            case("B"):{
-                holder.correctView.setText("B: "+_question.getB());
-                break;
-            }
-            case("C"):{
-                holder.correctView.setText("C: "+_question.getC());
-                break;
-            }
-            case("D"):{
-                holder.correctView.setText("D: "+_question.getD());
-                break;
-            }
-
+        List<String> chosen = _question.getQuestionCorrect();
+        if(isCorrect) {
+            holder.correctView.setAdapter(new AnswerAdapter(this.context, _question.getQuestionCorrect(), AnswerAdapter.Correct));
+            holder.correctView.setBackgroundColor(Color.GREEN);
         }
-    }
+        else{
+            holder.correctView.setAdapter(new AnswerAdapter(this.context,_question.getQuestionCorrect(),AnswerAdapter.NotChosen));
+            holder.correctView.setBackgroundColor(Color.YELLOW);
+        }
+        holder.correctView.setLayoutManager(new LinearLayoutManager(this.context));
+        holder.correctView.addItemDecoration(new DividerItemDecoration(this.context, LinearLayoutManager.VERTICAL));
+        }
 
     @Override
     public int getItemCount() {
@@ -64,7 +61,7 @@ public class CorrectAnsAdapter extends RecyclerView.Adapter<CorrectAnsAdapter.Vi
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder{
-         TextView correctView;
+         RecyclerView correctView;
          TextView questionName;
         public ViewHolder(@NonNull View itemView) {
             super(itemView);

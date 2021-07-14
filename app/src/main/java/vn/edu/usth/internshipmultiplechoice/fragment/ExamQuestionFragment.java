@@ -87,10 +87,10 @@ public class ExamQuestionFragment extends Fragment {
         ButtonD = (RadioButton) view.findViewById(R.id.ButtonD);
         Name = view.findViewById(R.id.QuestionName);
         Num = view.findViewById(R.id.QuestionNum);
-        A.setText("A: "+question.getA());
-        B.setText("B: "+question.getB());
-        C.setText("C: "+question.getC());
-        D.setText("D: "+question.getD());
+        A.setText("A: "+question.getAnswer().get(0));
+        B.setText("B: "+question.getAnswer().get(1));
+        C.setText("C: "+question.getAnswer().get(2));
+        D.setText("D: "+question.getAnswer().get(3));
         Name.setText(question.getName());
         Num.setText("Question " +String.valueOf(position+1)+": ");
         return view;

@@ -23,4 +23,24 @@
     <string name="notchosen_show">Chưa làm (Bấm để hiển thị)</string>
     <string name="notchosen_hide">Chưa làm (Bấm để dừng hiển thị)</string>
     <string name="score">Điểm</string>
+
+    <string name="username">Tên đăng nhập</string>
+    <string name="password">Mật khẩu</string>
+    <string name="email">Email</string>
+    <string name="id">Id</string>
+    <string name="Name">Tên</string>
+    <string name="login">Đăng nhập</string>
+    <string name="loginguest">Tiếp tục với tư cách là khách</string>
+    <string name="signup">Đăng ký</string>
+    <string name="bank">Ngân hàng câu hỏi</string>
+    <string name="exam">Làm bài thi thử</string>
+    <string name="examhistory">Lịch sử làm bài</string>
+    <string name="userinfo">Thông tin tài khoản</string>
+    <string name="signout">Đăng xuất</string>
+    <string name="info">info</string>
+    <string name="timer">Thời gian làm bài</string>
+    <string name="finish">Hoàn thành</string>
+    <string name="hasDone">Đã làm</string>
+    <string name="doBank">Trả lời câu hỏi từ ngân hàng câu hỏi</string>
+    <string name="doExam">Làm một bài thi từ ngân hàng câu hỏi</string>
 </resources>

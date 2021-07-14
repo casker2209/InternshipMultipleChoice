@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="10dp"
+    android:orientation="vertical"
+    tools:context=".CreateExamActivity">
+    <EditText
+        android:background="@drawable/edittext_border"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginBottom="10dp"
+        android:padding="10dp"
+        android:id="@+id/ExamName"
+        android:hint="Exam"></EditText>
+    <EditText
+        android:background="@drawable/edittext_border"
+        android:layout_width="match_parent"
+        android:minHeight="100dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginBottom="10dp"
+        android:padding="10dp"
+        android:id="@+id/ExamDescription"
+        android:gravity="clip_vertical"
+        android:hint="Description"></EditText>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+    <Button
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:text="Add a Question"
+        android:layout_below="@id/ExamQuestion"
+        android:layout_centerHorizontal="true"
+        android:id="@+id/ExamCreate"></Button>
+
+    <Button
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:text="Finish"
+        android:layout_below="@id/ExamCreate"
+        android:layout_centerHorizontal="true"
+        android:id="@+id/ExamCreateFinish"></Button>
+        <androidx.recyclerview.widget.RecyclerView
+            android:layout_width="match_parent"
+            android:layout_height="400dp"
+            android:layout_alignParentTop="true"
+            android:id="@+id/ExamQuestion"></androidx.recyclerview.widget.RecyclerView>
+
+    </RelativeLayout>
+</LinearLayout>

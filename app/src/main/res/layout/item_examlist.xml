@@ -1,79 +1,50 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
+<RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:paddingTop="10dp"
-    android:paddingBottom="10dp"
-    android:background="@drawable/customborder"
-    android:orientation="vertical"
-    >
-    <RelativeLayout
-        android:gravity="center_vertical"
-        android:layout_width="match_parent"
-        android:layout_height="40dp"
-
-        android:id="@+id/Name">
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:paddingLeft="10dp"
-            android:paddingRight="10dp"
-            android:gravity="center_vertical"
-            android:id="@+id/ExamName"></TextView>
-    </RelativeLayout>
-
-
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:background="@android:color/darker_gray"/>
-
-    <LinearLayout
-        android:id="@+id/DescAndGo"
-        android:layout_width="wrap_content"
-        android:layout_height="0dp"
-        android:orientation="vertical"
-        android:paddingLeft="10dp"
-        android:paddingRight="10dp"
-
+    android:layout_height="72dp"
+    android:paddingLeft="16dp"
+    android:paddingRight="16dp"
+    android:paddingTop="16dp"
         >
-
+    <ImageView
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_alignParentLeft="true"
+        android:layout_centerVertical="true"
+        android:src="@drawable/examcard"
+        android:layout_marginRight="16dp"
+        android:id="@+id/examicon"></ImageView>
+    <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@id/examicon"
+            android:orientation="vertical">
         <TextView
-            android:id="@+id/Description"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:minHeight="60dp"
-            android:paddingTop="10dp"
-            android:paddingBottom="10dp"
-            android:text="Dummy description"></TextView>
-
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:background="@android:color/darker_gray" />
-
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="40dp">
-
-            <Button
-                android:id="@+id/goExam"
-                android:layout_width="40dp"
-                android:layout_height="match_parent"
-                android:layout_alignParentRight="true"></Button>
-
+            android:gravity="top"
+            android:text="Dummy name"
+            android:textSize="16sp"
+            android:id="@+id/ExamName"></TextView>
             <TextView
+                android:id="@+id/Description"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_toLeftOf="@+id/goExam"
-                android:gravity="center_vertical"
-                android:text="Start"></TextView>
-        </RelativeLayout>
+                android:layout_height="wrap_content"
+                android:gravity="top"
+                android:textSize="12sp"
+                android:text="Dummy description"></TextView>
+        </LinearLayout>
 
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:background="@android:color/darker_gray" />
-    </LinearLayout>
+    <Button
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:layout_marginLeft="16dp"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        android:background="@drawable/right"
+        android:id="@+id/goButton"></Button>
 
-</LinearLayout>
+
+   
+
+</RelativeLayout>

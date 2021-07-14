@@ -11,12 +11,11 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
+        android:imeOptions="actionNext"
         android:orientation="vertical"
         android:paddingLeft="20dp"
         android:paddingRight="20dp"
-        android:paddingBottom="40dp"
-        android:imeOptions="actionNext"
-        >
+        android:paddingBottom="160dp">
 
         <EditText
             android:id="@+id/usernamebox"
@@ -25,9 +24,11 @@
             android:layout_marginLeft="10dp"
             android:layout_marginTop="40dp"
             android:layout_marginRight="10dp"
+            android:background="@drawable/edittext_border"
+            android:hint="@string/username"
             android:inputType="text"
             android:maxLines="1"
-            android:hint="Username" />
+            android:paddingLeft="10dp" />
 
         <EditText
             android:id="@+id/passwordbox"
@@ -37,25 +38,27 @@
             android:layout_marginTop="10dp"
             android:layout_marginRight="10dp"
             android:layout_marginBottom="40dp"
-            android:background="@drawable/rounded_shape"
-            android:hint="Password"
+            android:background="@drawable/edittext_border"
+            android:hint="@string/password"
             android:inputType="textPassword"
-            android:maxLines="1"            />
+            android:maxLines="1"
+            android:paddingLeft="10dp" />
 
         <TextView
             android:id="@+id/login"
             android:layout_width="match_parent"
-            android:layout_height="30dp"
-            android:layout_gravity="center_horizontal"
+            android:layout_height="40dp"
+            android:layout_marginBottom="10dp"
+            android:gravity="center"
             android:background="@drawable/rounded_shape"
             android:backgroundTint="@android:color/holo_green_light"
-            android:text="Log in"
+            android:text="@string/login"
             android:textAlignment="center" />
 
         <TextView
             android:id="@+id/logingoogle"
             android:layout_width="match_parent"
-            android:layout_height="40dp"
+            android:layout_height="0dp"
             android:background="@drawable/rounded_shape"
             android:backgroundTint="@android:color/holo_red_light"
             android:gravity="center"
@@ -63,22 +66,24 @@
             android:textAlignment="center" />
 
         <TextView
+            android:id="@+id/guest"
             android:layout_width="match_parent"
             android:layout_height="40dp"
+            android:layout_marginBottom="10dp"
             android:background="@drawable/rounded_shape"
             android:backgroundTint="@android:color/holo_blue_dark"
             android:gravity="center"
-            android:id="@+id/guest"
-            android:text="Continue as Guest"
+            android:text="@string/loginguest"
             android:textAlignment="center" />
 
         <TextView
+            android:id="@+id/signupbutton"
             android:layout_width="match_parent"
             android:layout_height="40dp"
-            android:id="@+id/signupbutton"
-            android:background="@drawable/rounded_shape"
-            android:gravity="center"
 
-            android:text="Sign up" />
+            android:background="@drawable/rounded_shape"
+            android:backgroundTint="@android:color/holo_orange_dark"
+            android:gravity="center"
+            android:text="@string/signup" />
     </LinearLayout>
 </RelativeLayout>

@@ -1,5 +1,6 @@
 package vn.edu.usth.internshipmultiplechoice.adapter;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.view.LayoutInflater;
@@ -12,16 +13,24 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import java.util.Collections;
 import java.util.List;
 
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 import vn.edu.usth.internshipmultiplechoice.ExamActivity;
 import vn.edu.usth.internshipmultiplechoice.R;
+import vn.edu.usth.internshipmultiplechoice.object.Exam;
 import vn.edu.usth.internshipmultiplechoice.object.ExamMini;
+import vn.edu.usth.internshipmultiplechoice.object.Question;
 import vn.edu.usth.internshipmultiplechoice.retrofit.RetrofitClient;
+import vn.edu.usth.internshipmultiplechoice.utility.UserSharedPreferences;
 
 public class ExamListAdapter extends RecyclerView.Adapter<ExamListAdapter.ViewHolder> {
     List<ExamMini> examList;
     Context context;
+    Exam exam;
 
     public ExamListAdapter(List examList, Context context) {
         this.examList = examList;
@@ -40,6 +49,30 @@ public class ExamListAdapter extends RecyclerView.Adapter<ExamListAdapter.ViewHo
         return viewHolder;
     }
 
+    public void getQuestion(ExamMini examMini){
+        RetrofitClient retrofitClient = RetrofitClient.getInstance();
+        String id = examMini.getId();
+        Call<Exam> examCall = retrofitClient.getMyApi().getExam(id);
+        examCall.enqueue(new Callback<Exam>() {
+            @Override
+            public void onResponse(Call<Exam> call, Response<Exam> response) {
+                for(Question question: response.body().getQuestionList()) {
+                    Collections.shuffle(question.getAnswer());
+                }
+                exam = response.body();
+                Intent intent = new Intent(context,ExamActivity.class);
+                boolean isUser = UserSharedPreferences.hasUser(context);
+                intent.putExtra("exam",exam);
+                context.startActivity(intent);
+            }
+
+            @Override
+            public void onFailure(Call<Exam> call, Throwable t) {
+
+            }
+        });
+    }
+
     @Override
     public void onBindViewHolder(@NonNull ExamListAdapter.ViewHolder holder, int position) {
         ExamMini examMini = examList.get(position);
@@ -48,9 +81,7 @@ public class ExamListAdapter extends RecyclerView.Adapter<ExamListAdapter.ViewHo
         holder.Go.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(context,ExamActivity.class);
-                intent.putExtra("id",examMini.getId());
-                context.startActivity(intent);
+                getQuestion(examMini);
             }
         });
     }
@@ -64,33 +95,12 @@ public class ExamListAdapter extends RecyclerView.Adapter<ExamListAdapter.ViewHo
     public class ViewHolder extends RecyclerView.ViewHolder {
         private TextView nameView;
         private TextView descView;
-        private LinearLayout DescAndGo;
         private Button Go;
-        public boolean checkSize(){
-            int height = descView.getHeight();
-            if(height!=0){
-                return true;
-            }
-            else{
-                return false;
-            }
-        }
         public ViewHolder(View itemView) {
             super(itemView);
             nameView = itemView.findViewById(R.id.ExamName);
             descView = itemView.findViewById(R.id.Description);
-            DescAndGo = itemView.findViewById(R.id.DescAndGo);
-            Go = itemView.findViewById(R.id.goExam);
-            nameView.setOnClickListener(new View.OnClickListener() {
-                public void onClick(View v) {
-                    if(checkSize()){
-                        DescAndGo.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,0));
-                    }
-                    else{
-                        DescAndGo.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,LinearLayout.LayoutParams.WRAP_CONTENT));
-                    }
-                }
-            });
+            Go = itemView.findViewById(R.id.goButton);
         }
     }
 }

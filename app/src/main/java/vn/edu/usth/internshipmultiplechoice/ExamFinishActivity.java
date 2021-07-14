@@ -24,20 +24,6 @@ public class ExamFinishActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_exam_finish);
         init();
-        CountDownTimer countDownTimer = new CountDownTimer(1000*10,1000) {
-            @Override
-            public void onTick(long millisUntilFinished) {
-                System.out.println(millisUntilFinished);
-            }
-
-            @Override
-            public void onFinish() {
-                Intent intent = new Intent(ExamFinishActivity.this,ExamHistoryActivity.class);
-                intent.putExtra("Exam",examHistory);
-                startActivity(intent);
-            }
-        };
-        countDownTimer.start();
     }
 
     public void init() {
@@ -48,7 +34,7 @@ public class ExamFinishActivity extends AppCompatActivity {
         ExamName.setText(examHistory.getExam().getName());
         ExamScore.setText(examHistory.getScore());
         RightQuestionList = findViewById(R.id.ExamCorrectList);
-        RightQuestionList.setAdapter(new CorrectAnsAdapter(examHistory.getQuestionRight(), this));
+        RightQuestionList.setAdapter(new CorrectAnsAdapter(examHistory.getQuestionRight(), this,true));
         RightQuestionList.setLayoutManager(new LinearLayoutManager(this));
         WrongQuestionList = findViewById(R.id.ExamIncorrectList);
         WrongQuestionList.setAdapter(new IncorrectAnsAdapter(examHistory.getQuestionWrong(), examHistory.getIncorrectChosen(), this));
@@ -99,7 +85,7 @@ public class ExamFinishActivity extends AppCompatActivity {
         }
         else WrongQuestionShow.setText(getString(R.string.incorrect_size_zero));
         NotChosenList = findViewById(R.id.NotChosenList);
-        NotChosenList.setAdapter(new CorrectAnsAdapter(examHistory.getQuestionNotChosen(), this));
+        NotChosenList.setAdapter(new CorrectAnsAdapter(examHistory.getQuestionNotChosen(), this,false));
         NotChosenList.setLayoutManager(new LinearLayoutManager(this));
         NotChosenShow = findViewById(R.id.NotChosenText);
         if (examHistory.getQuestionNotChosen().size() != 0) {

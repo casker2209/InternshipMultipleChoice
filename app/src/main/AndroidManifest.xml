@@ -13,30 +13,37 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".ExamHistoryActivity"></activity>
+        <activity android:name=".MainMenuActivity"></activity>
+        <activity android:name=".ExamHistoryActivity" />
         <activity android:name=".MenuActivity" />
         <activity android:name=".ExamFinishActivity" />
         <activity android:name=".ExamListActivity" />
+        <activity android:name=".BankTestActivity" />
         <activity android:name=".ExamActivity" />
         <activity android:name=".SignupActivity" />
         <!--
-               Set to true if your app is Standalone, that is, it does not require the handheld
-               app to run.
+           Set to true if your app is Standalone, that is, it does not require the handheld
+           app to run.
         -->
         <activity
             android:name=".LoadingActivity"
-            android:label="@string/title_activity_loading" />
-        <activity
-            android:name=".MainActivity"
-            android:label="MainActivity" />
-        <activity
-            android:name=".LoginActivity"
-            android:label="@string/title_activity_login">
+            android:label="@string/title_activity_loading" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+        </activity>
+        <activity
+            android:name=".MainActivity"
+            android:label="MainActivity" />
+        <activity
+            android:name=".BankListActivity"
+            android:label="BankListActivity" />
+        <activity
+            android:name=".LoginActivity"
+            android:label="@string/title_activity_login">
+
         </activity>
     </application>
 

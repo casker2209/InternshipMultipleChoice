@@ -8,13 +8,13 @@ public class ExamHistory implements Serializable {
     private Exam exam;
     private String score;
     List<Question> questionRight,questionWrong,questionNotChosen; 
-    List<String> IncorrectChosen;
-    public ExamHistory(Exam exam,String score,List<Question> questionRight,List<Question> questionWrong,List<String> IncorrectChosen,List<Question> questionNotChosen){
+    List<List<String>> incorrectChosen;
+    public ExamHistory(Exam exam,String score,List<Question> questionRight,List<Question> questionWrong,List<List<String>> IncorrectChosen,List<Question> questionNotChosen){
         this.exam = exam;
         this.score = score;
         this.questionRight = questionRight;
         this.questionWrong = questionWrong;
-        this.IncorrectChosen = IncorrectChosen;
+        this.incorrectChosen = IncorrectChosen;
         this.questionNotChosen = questionNotChosen;
     }
 
@@ -26,8 +26,8 @@ public class ExamHistory implements Serializable {
         return exam;
     }
 
-    public List<String> getIncorrectChosen() {
-        return IncorrectChosen;
+    public List<List<String>> getIncorrectChosen() {
+        return incorrectChosen;
     }
 
     public List<Question> getQuestionRight() {
@@ -51,7 +51,7 @@ public class ExamHistory implements Serializable {
     }
 
     public void setIncorrectChosen(List<String> incorrectChosen) {
-        IncorrectChosen = incorrectChosen;
+        incorrectChosen = incorrectChosen;
     }
 
     public void setQuestionRight(List<Question> questionRight) {

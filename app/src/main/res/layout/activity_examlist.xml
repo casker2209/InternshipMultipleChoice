@@ -5,14 +5,28 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".ExamListActivity"
-    android:orientation="horizontal">
+    android:orientation="vertical">
+
+
+
+        <androidx.appcompat.widget.Toolbar
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:title="@string/exam"
+            android:background="@android:color/holo_blue_light"
+            app:menu="@menu/menu"
+            android:id="@+id/toolbar"
+            ></androidx.appcompat.widget.Toolbar>
+
+    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/pullToRefresh">
+
 <androidx.recyclerview.widget.RecyclerView
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:paddingTop="20dp"
-    android:paddingRight="20dp"
 
-    android:paddingBottom="20dp"
-    android:paddingLeft="20dp"
     android:id="@+id/RecyclerViewExamList"></androidx.recyclerview.widget.RecyclerView>
+    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 </LinearLayout>

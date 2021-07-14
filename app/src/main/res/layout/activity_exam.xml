@@ -56,7 +56,7 @@
         android:layout_centerHorizontal="true"
         android:layout_marginTop="10dp"
         android:layout_below="@+id/PageLayout"
-        android:text="Finish"
+        android:text="@string/finish"
         android:id="@+id/finishButton"></Button>
     <androidx.coordinatorlayout.widget.CoordinatorLayout
         android:layout_width="match_parent"
@@ -79,7 +79,7 @@
         android:id="@+id/hasDone"
         android:layout_width="match_parent"
         android:layout_height="50dp"
-        android:text="Has done"
+        android:text="@string/hasDone"
         android:background="@android:color/holo_blue_bright"
         android:gravity="center"
         android:textSize="20sp">
@@ -96,7 +96,7 @@
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
     <TextView
         android:id="@+id/Timer"
-        android:text="Timer"
+        android:text="@string/timer"
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:layout_below="@+id/finishButton"
