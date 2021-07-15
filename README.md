@@ -1,2 +1,2 @@
-# InternshipMultipleChoice
- Backend API for my Multiple Choice Android App
+# Internship Multiple Choice
+Android Client for my multiple choice test app
