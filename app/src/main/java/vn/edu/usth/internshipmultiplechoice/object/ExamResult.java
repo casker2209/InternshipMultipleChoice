@@ -4,12 +4,12 @@ package vn.edu.usth.internshipmultiplechoice.object;
 import java.io.Serializable;
 import java.util.List;
 
-public class ExamHistory implements Serializable {
+public class ExamResult implements Serializable {
     private Exam exam;
     private String score;
     List<Question> questionRight,questionWrong,questionNotChosen; 
     List<List<String>> incorrectChosen;
-    public ExamHistory(Exam exam,String score,List<Question> questionRight,List<Question> questionWrong,List<List<String>> IncorrectChosen,List<Question> questionNotChosen){
+    public ExamResult(Exam exam, String score, List<Question> questionRight, List<Question> questionWrong, List<List<String>> IncorrectChosen, List<Question> questionNotChosen){
         this.exam = exam;
         this.score = score;
         this.questionRight = questionRight;

@@ -14,13 +14,13 @@ import androidx.recyclerview.widget.RecyclerView;
 import java.util.List;
 
 import vn.edu.usth.internshipmultiplechoice.R;
-import vn.edu.usth.internshipmultiplechoice.object.ExamHistory;
+import vn.edu.usth.internshipmultiplechoice.object.ExamResult;
 
 public class ExamHistoryListAdapter extends RecyclerView.Adapter<ExamHistoryListAdapter.ViewHolder> {
-    List<ExamHistory> examHistoryList;
+    List<ExamResult> examResultList;
     Context context;
-    public ExamHistoryListAdapter(List<ExamHistory> examHistoryList,Context context){
-        this.examHistoryList = examHistoryList;
+    public ExamHistoryListAdapter(List<ExamResult> examResultList, Context context){
+        this.examResultList = examResultList;
         this.context = context;
     }
     @NonNull
@@ -35,16 +35,16 @@ public class ExamHistoryListAdapter extends RecyclerView.Adapter<ExamHistoryList
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        ExamHistory examHistory = examHistoryList.get(position);
-        holder.ExamName.setText(examHistory.getExam().getName());
-        holder.ExamScore.setText(examHistory.getScore());
-        holder.CorrectRecyclerView.setAdapter(new CorrectAnsAdapter(examHistory.getQuestionRight(),context,true));
-        holder.IncorrectRecyclerView.setAdapter(new IncorrectAnsAdapter(examHistory.getQuestionWrong(),examHistory.getIncorrectChosen(),context));
-        holder.NotChosenRecyclerView.setAdapter(new CorrectAnsAdapter(examHistory.getQuestionNotChosen(),context,false));
+        ExamResult examResult = examResultList.get(position);
+        holder.ExamName.setText(examResult.getExam().getName());
+        holder.ExamScore.setText(examResult.getScore());
+        holder.CorrectRecyclerView.setAdapter(new CorrectAnsAdapter(examResult.getQuestionRight(),context,true));
+        holder.IncorrectRecyclerView.setAdapter(new IncorrectAnsAdapter(examResult.getQuestionWrong(), examResult.getIncorrectChosen(),context));
+        holder.NotChosenRecyclerView.setAdapter(new CorrectAnsAdapter(examResult.getQuestionNotChosen(),context,false));
         holder.CorrectRecyclerView.setLayoutManager(new LinearLayoutManager(context));
         holder.IncorrectRecyclerView.setLayoutManager(new LinearLayoutManager(context));
         holder.NotChosenRecyclerView.setLayoutManager(new LinearLayoutManager(context));
-        if(examHistory.getQuestionRight().size()!=0) {
+        if(examResult.getQuestionRight().size()!=0) {
             holder.CorrectShow.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -65,7 +65,7 @@ public class ExamHistoryListAdapter extends RecyclerView.Adapter<ExamHistoryList
         else{
             holder.CorrectShow.setText(context.getString(R.string.correct_size_zero));
         }
-        if(examHistory.getQuestionWrong().size()!=0) {
+        if(examResult.getQuestionWrong().size()!=0) {
             holder.IncorrectShow.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -88,7 +88,7 @@ public class ExamHistoryListAdapter extends RecyclerView.Adapter<ExamHistoryList
         else{
             holder.IncorrectShow.setText(context.getString(R.string.incorrect_size_zero));
         }
-        if(examHistory.getQuestionNotChosen().size()!=0) {
+        if(examResult.getQuestionNotChosen().size()!=0) {
             holder.NotChosenShow.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -132,7 +132,7 @@ public class ExamHistoryListAdapter extends RecyclerView.Adapter<ExamHistoryList
 
     @Override
     public int getItemCount() {
-        return examHistoryList.size();
+        return examResultList.size();
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {

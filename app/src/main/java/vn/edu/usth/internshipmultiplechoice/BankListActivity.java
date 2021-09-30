@@ -9,7 +9,6 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
-import android.app.Activity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -22,14 +21,12 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 import vn.edu.usth.internshipmultiplechoice.adapter.BankListAdapter;
-import vn.edu.usth.internshipmultiplechoice.adapter.ExamListAdapter;
-import vn.edu.usth.internshipmultiplechoice.object.Bank;
-import vn.edu.usth.internshipmultiplechoice.object.ExamMini;
+import vn.edu.usth.internshipmultiplechoice.object.BankInfo;
 import vn.edu.usth.internshipmultiplechoice.retrofit.RetrofitClient;
 
 public class BankListActivity extends AppCompatActivity {
     RetrofitClient retrofit;
-    List<Bank> bankList;
+    List<BankInfo> bankList;
     RecyclerView recyclerView;
     BankListAdapter bankListAdapter;
     SwipeRefreshLayout pullToRefresh;
@@ -72,10 +69,10 @@ public class BankListActivity extends AppCompatActivity {
     public void getList(int mode) throws IOException {
         retrofit = RetrofitClient.getInstance();
         bankList = new ArrayList<>();
-        Call<List<Bank>> examCall = retrofit.getMyApi().getAllBank();
-        examCall.enqueue(new Callback<List<Bank>>() {
+        Call<List<BankInfo>> examCall = retrofit.getMyApi().getAllBank();
+        examCall.enqueue(new Callback<List<BankInfo>>() {
             @Override
-            public void onResponse(Call<List<Bank>> call, Response<List< Bank>> response) {
+            public void onResponse(Call<List<BankInfo>> call, Response<List<BankInfo>> response) {
                 bankList = response.body();;
                 if(mode == init){
                     init();
@@ -87,7 +84,7 @@ public class BankListActivity extends AppCompatActivity {
             }
 
             @Override
-            public void onFailure(Call<List<Bank>> call, Throwable t) {
+            public void onFailure(Call<List<BankInfo>> call, Throwable t) {
                 if(mode == update) pullToRefresh.setRefreshing(false);
             }
         });

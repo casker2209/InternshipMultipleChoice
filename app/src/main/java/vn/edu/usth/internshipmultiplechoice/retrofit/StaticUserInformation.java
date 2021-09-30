@@ -1,9 +1,7 @@
 package vn.edu.usth.internshipmultiplechoice.retrofit;
 
-import vn.edu.usth.internshipmultiplechoice.User;
-
 public class StaticUserInformation {
-    private UserInfo user;
+    private User user;
     private boolean isGuest;
 
 
@@ -15,11 +13,11 @@ public class StaticUserInformation {
         return isGuest;
     }
 
-    public UserInfo getUserInfo() {
+    public User getUserInfo() {
         return user;
     }
 
-    public void setUser(UserInfo user) {
+    public void setUser(User user) {
         this.user = user;
     }
 

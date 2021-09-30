@@ -6,18 +6,17 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.CountDownTimer;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
 import vn.edu.usth.internshipmultiplechoice.adapter.CorrectAnsAdapter;
 import vn.edu.usth.internshipmultiplechoice.adapter.IncorrectAnsAdapter;
-import vn.edu.usth.internshipmultiplechoice.object.ExamHistory;
+import vn.edu.usth.internshipmultiplechoice.object.ExamResult;
 
 public class ExamFinishActivity extends AppCompatActivity {
     TextView ExamName,ExamDescription,ExamScore,RightQuestionShow,WrongQuestionShow,NotChosenShow,RedoExam;
-    ExamHistory examHistory;
+    ExamResult examResult;
     RecyclerView RightQuestionList,WrongQuestionList,NotChosenList;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,20 +27,20 @@ public class ExamFinishActivity extends AppCompatActivity {
 
     public void init() {
         Intent intent = getIntent();
-        examHistory = (ExamHistory) intent.getSerializableExtra("exam result");
+        examResult = (ExamResult) intent.getSerializableExtra("exam result");
         ExamName = findViewById(R.id.ExamName);
         ExamScore = findViewById(R.id.ExamScoreContent);
-        ExamName.setText(examHistory.getExam().getName());
-        ExamScore.setText(examHistory.getScore());
+        ExamName.setText(examResult.getExam().getName());
+        ExamScore.setText(examResult.getScore());
         RightQuestionList = findViewById(R.id.ExamCorrectList);
-        RightQuestionList.setAdapter(new CorrectAnsAdapter(examHistory.getQuestionRight(), this,true));
+        RightQuestionList.setAdapter(new CorrectAnsAdapter(examResult.getQuestionRight(), this,true));
         RightQuestionList.setLayoutManager(new LinearLayoutManager(this));
         WrongQuestionList = findViewById(R.id.ExamIncorrectList);
-        WrongQuestionList.setAdapter(new IncorrectAnsAdapter(examHistory.getQuestionWrong(), examHistory.getIncorrectChosen(), this));
+        WrongQuestionList.setAdapter(new IncorrectAnsAdapter(examResult.getQuestionWrong(), examResult.getIncorrectChosen(), this));
         WrongQuestionList.setLayoutManager(new LinearLayoutManager(this));
         RightQuestionShow = findViewById(R.id.CorrectAnswerText);
         WrongQuestionShow = findViewById(R.id.IncorrectAnswerText);
-        if(examHistory.getQuestionRight().size()!=0) {
+        if(examResult.getQuestionRight().size()!=0) {
             RightQuestionShow.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -64,7 +63,7 @@ public class ExamFinishActivity extends AppCompatActivity {
         else{
             RightQuestionShow.setText(getString(R.string.correct_size_zero));
         }
-        if(examHistory.getQuestionWrong().size()!=0) {
+        if(examResult.getQuestionWrong().size()!=0) {
             WrongQuestionShow.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -85,10 +84,10 @@ public class ExamFinishActivity extends AppCompatActivity {
         }
         else WrongQuestionShow.setText(getString(R.string.incorrect_size_zero));
         NotChosenList = findViewById(R.id.NotChosenList);
-        NotChosenList.setAdapter(new CorrectAnsAdapter(examHistory.getQuestionNotChosen(), this,false));
+        NotChosenList.setAdapter(new CorrectAnsAdapter(examResult.getQuestionNotChosen(), this,false));
         NotChosenList.setLayoutManager(new LinearLayoutManager(this));
         NotChosenShow = findViewById(R.id.NotChosenText);
-        if (examHistory.getQuestionNotChosen().size() != 0) {
+        if (examResult.getQuestionNotChosen().size() != 0) {
             NotChosenShow.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {

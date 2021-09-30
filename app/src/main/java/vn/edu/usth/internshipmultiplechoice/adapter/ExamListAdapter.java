@@ -22,6 +22,7 @@ import retrofit2.Response;
 import vn.edu.usth.internshipmultiplechoice.ExamActivity;
 import vn.edu.usth.internshipmultiplechoice.R;
 import vn.edu.usth.internshipmultiplechoice.object.Exam;
+import vn.edu.usth.internshipmultiplechoice.object.ExamContent;
 import vn.edu.usth.internshipmultiplechoice.object.ExamMini;
 import vn.edu.usth.internshipmultiplechoice.object.Question;
 import vn.edu.usth.internshipmultiplechoice.retrofit.RetrofitClient;
@@ -52,14 +53,15 @@ public class ExamListAdapter extends RecyclerView.Adapter<ExamListAdapter.ViewHo
     public void getQuestion(ExamMini examMini){
         RetrofitClient retrofitClient = RetrofitClient.getInstance();
         String id = examMini.getId();
-        Call<Exam> examCall = retrofitClient.getMyApi().getExam(id);
-        examCall.enqueue(new Callback<Exam>() {
+        Call<ExamContent> examCall = retrofitClient.getMyApi().getExam(id);
+        examCall.enqueue(new Callback<ExamContent>() {
             @Override
-            public void onResponse(Call<Exam> call, Response<Exam> response) {
-                for(Question question: response.body().getQuestionList()) {
+            public void onResponse(Call<ExamContent> call, Response<ExamContent> response) {
+                ExamContent content = response.body();
+                for(Question question: content.getQuestionList()) {
                     Collections.shuffle(question.getAnswer());
                 }
-                exam = response.body();
+                Exam exam = new Exam(content.getId(),examMini.getName(),examMini.getDescription(),content.getQuestionList());
                 Intent intent = new Intent(context,ExamActivity.class);
                 boolean isUser = UserSharedPreferences.hasUser(context);
                 intent.putExtra("exam",exam);
@@ -67,7 +69,7 @@ public class ExamListAdapter extends RecyclerView.Adapter<ExamListAdapter.ViewHo
             }
 
             @Override
-            public void onFailure(Call<Exam> call, Throwable t) {
+            public void onFailure(Call<ExamContent> call, Throwable t) {
 
             }
         });

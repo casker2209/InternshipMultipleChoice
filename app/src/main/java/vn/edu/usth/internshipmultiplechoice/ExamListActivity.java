@@ -110,9 +110,9 @@ public class ExamListActivity extends AppCompatActivity {
             {
                 AlertDialog.Builder dialog = new AlertDialog.Builder(this).setTitle("Thông tin bài kiểm tra")
                         .setMessage("Bấm vào bài kiểm tra thử bạn muốn chọn để bắt đầu làm bài thi \n" +
-                                "Bài thi mô phỏng đề thi vòng một: Thi công chức, 60 câu (nếu thi kiến thức chung),30 câu (nếu thi ngoại ngữ hoặc tin học)\n" +
+                                "Bài thi mô phỏng đề thi vòng một:-Thi công chức, 60 câu (nếu thi kiến thức chung),30 câu (nếu thi ngoại ngữ hoặc tin học)\n" +
                                 "Bài thi có thời gian làm bài là 30 phút hoặc 60 phút tùy số lượng câu trong đề \n" +
-                                "Bấm vào nút Hoàn thành để hoàn thành bài thi sớm. Sau khi bài thi kết thúc kết quả sẽ được lưu và hiển thị. Để xem lại có thể chọn phần Lịch sử làm bài ở menu")
+                                "Bấm vào nút Hoàn thành để hoàn thành bài thi sớm. \nSau khi bài thi kết thúc kết quả sẽ được lưu và hiển thị. \nĐể xem lại có thể chọn phần Lịch sử làm bài ở menu")
                         .setPositiveButton("Tôi hiểu rồi",null);
                 AlertDialog alertDialog = dialog.show();
                 return true;

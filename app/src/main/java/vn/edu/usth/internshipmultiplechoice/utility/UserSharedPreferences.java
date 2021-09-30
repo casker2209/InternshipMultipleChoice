@@ -3,10 +3,10 @@ package vn.edu.usth.internshipmultiplechoice.utility;
 import android.content.Context;
 import android.content.SharedPreferences;
 
-import vn.edu.usth.internshipmultiplechoice.retrofit.UserInfo;
+import vn.edu.usth.internshipmultiplechoice.retrofit.User;
 
 public class UserSharedPreferences {
-    public static void saveUser(UserInfo user, Context context){
+    public static void saveUser(User user, Context context){
         SharedPreferences preferences = context.getSharedPreferences("user",Context.MODE_PRIVATE);
         SharedPreferences.Editor preferencesEditor = preferences.edit();
         preferencesEditor.putString("id",user.getId());
@@ -16,14 +16,14 @@ public class UserSharedPreferences {
         preferencesEditor.putString("email",user.getEmail());
         preferencesEditor.commit();
     }
-    public static UserInfo getUser(Context context){
+    public static User getUser(Context context){
         SharedPreferences preferences = context.getSharedPreferences("user",Context.MODE_PRIVATE);
-        UserInfo userInfo = new UserInfo(preferences.getString("id",null),
+        User user = new User(preferences.getString("id",null),
                 preferences.getString("username",null),
                 preferences.getString("email",null),
                 preferences.getString("token",null),
                 preferences.getString("name",null));
-        return userInfo;
+        return user;
     }
     public static void deleteUser(Context context){
         SharedPreferences preferences = context.getSharedPreferences("user",Context.MODE_PRIVATE);

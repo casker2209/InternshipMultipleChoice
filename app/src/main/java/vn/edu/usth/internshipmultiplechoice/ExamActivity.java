@@ -3,14 +3,9 @@ package vn.edu.usth.internshipmultiplechoice;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.cardview.widget.CardView;
-import androidx.core.widget.NestedScrollView;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager2.widget.ViewPager2;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -35,10 +30,7 @@ import com.google.android.flexbox.FlexboxLayoutManager;
 import com.google.android.flexbox.JustifyContent;
 import com.google.android.material.bottomsheet.BottomSheetBehavior;
 
-import java.sql.Array;
-import java.sql.Time;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 import okhttp3.ResponseBody;
@@ -46,13 +38,11 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 import vn.edu.usth.internshipmultiplechoice.adapter.ExamAdapter;
-import vn.edu.usth.internshipmultiplechoice.fragment.ExamQuestionFragment;
-import vn.edu.usth.internshipmultiplechoice.fragment.UserFragment;
 import vn.edu.usth.internshipmultiplechoice.object.Exam;
-import vn.edu.usth.internshipmultiplechoice.object.ExamHistory;
+import vn.edu.usth.internshipmultiplechoice.object.ExamResult;
 import vn.edu.usth.internshipmultiplechoice.object.Question;
 import vn.edu.usth.internshipmultiplechoice.retrofit.RetrofitClient;
-import vn.edu.usth.internshipmultiplechoice.retrofit.UserInfo;
+import vn.edu.usth.internshipmultiplechoice.retrofit.User;
 import vn.edu.usth.internshipmultiplechoice.utility.UserSharedPreferences;
 
 public class ExamActivity extends AppCompatActivity {
@@ -64,7 +54,6 @@ public class ExamActivity extends AppCompatActivity {
     TextView PageNum;
     TextView Timer,HasDone;
     Button goBefore,goAfter,finishButton;
-    String timer,hasDone;
     List<Question> Correct,Wrong,NotChosen;
     CountDownTimer countDownTimer;
     List<List<String>> IncorrectChosen;
@@ -124,12 +113,12 @@ public class ExamActivity extends AppCompatActivity {
         return(Correct.size() + "/" + adapterRecycler.getItemCount());
     }
 
-    public void sendHistory(ExamHistory examHistory){
+    public void sendHistory(ExamResult examResult){
         Log.e("Sending exam","Sending exam history");
         RetrofitClient client = RetrofitClient.getInstance();
-        UserInfo user = UserSharedPreferences.getUser(this);
-        Call<ResponseBody> springResponse = client.getMyApi().sendExam(user.getId(),examHistory,user.getAccessToken());
-        System.out.println(examHistory.getExam().getName());
+        User user = UserSharedPreferences.getUser(this);
+        Call<ResponseBody> springResponse = client.getMyApi().sendExam(user.getId(), examResult,user.getAccessToken());
+        System.out.println(examResult.getExam().getName());
         Context thisContext = this;
         springResponse.enqueue(new Callback<ResponseBody>() {
             @Override
@@ -146,12 +135,12 @@ public class ExamActivity extends AppCompatActivity {
 
     public void ExamFinish(){
         Intent intent = new Intent(getBaseContext(),ExamFinishActivity.class);
-        ExamHistory examHistory = new ExamHistory(exam,getScore(),Correct,Wrong,IncorrectChosen,NotChosen);
+        ExamResult examResult = new ExamResult(exam,getScore(),Correct,Wrong,IncorrectChosen,NotChosen);
         boolean isUser = UserSharedPreferences.hasUser(this);
         if(isUser){
-        sendHistory(examHistory);
+        sendHistory(examResult);
         }
-        intent.putExtra("exam result",examHistory);
+        intent.putExtra("exam result", examResult);
         startActivity(intent);
         finish();
     }
@@ -193,7 +182,7 @@ public class ExamActivity extends AppCompatActivity {
                 AlertDialog alertDialog = dialog.show();
             }
         });
-        int durationinMilis = 1000*30;
+        int durationinMilis = exam.getQuestionList().size()*60000;
         countDownTimer = new CountDownTimer(durationinMilis,1000) {
             @Override
             public void onTick(long millisUntilFinished) {
@@ -274,7 +263,7 @@ public class ExamActivity extends AppCompatActivity {
         static final int Question5Answer = 2;
         Exam exam;
         Context context;
-        List<List<String>> chosen;
+        List<List<String>> Chosen;
         int hasDone;
 
         public int getHasDone() {
@@ -284,10 +273,10 @@ public class ExamActivity extends AppCompatActivity {
         public ExamAdapterRecycler(Context context, Exam exam){
             this.context = context;
             this.exam = exam;
-            this.chosen = new ArrayList<>();
+            this.Chosen = new ArrayList<>();
             for(int i = 0;i<exam.getQuestionList().size();i++){
                 List<String> chosenList = new ArrayList<>();
-                chosen.add(chosenList);
+                Chosen.add(chosenList);
             }
             this.hasDone = 0;
         }
@@ -320,7 +309,7 @@ public class ExamActivity extends AppCompatActivity {
             return exam.getQuestionList().get(position);
         }
         public List<String> getChosen(int position){
-            return chosen.get(position);
+            return Chosen.get(position);
         }
         @Override
         public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position){
@@ -350,7 +339,7 @@ public class ExamActivity extends AppCompatActivity {
                     public void onCheckedChanged(RadioGroup group, int checkedId) {
                         switch (checkedId) {
                             case R.id.ButtonA:
-                                if (chosen.get(position).size() == 0) {
+                                if (Chosen.get(position).size() == 0) {
                                     hasDone++;
                                     notifyDataSetChanged();
                                     HasDone.setText("Đã làm: " + hasDone + "/" + exam.getQuestionList().size());
@@ -359,11 +348,11 @@ public class ExamActivity extends AppCompatActivity {
                                 templist.add(finalHolder.A.getText().toString());
                                 List<String> templist2 = new ArrayList<>();
                                 templist2.add("A");
-                                chosen.set(position, templist);
+                                Chosen.set(position, templist);
                                 forChecked.set(position, templist2);
                                 break;
                             case R.id.ButtonB:
-                                if (chosen.get(position).size() == 0) {
+                                if (Chosen.get(position).size() == 0) {
                                     hasDone++;
                                     notifyDataSetChanged();
                                     HasDone.setText("Đã làm: " + hasDone + "/" + exam.getQuestionList().size());
@@ -372,11 +361,11 @@ public class ExamActivity extends AppCompatActivity {
                                 templist.add(finalHolder.B.getText().toString());
                                 templist2 = new ArrayList<>();
                                 templist2.add("B");
-                                chosen.set(position, templist);
+                                Chosen.set(position, templist);
                                 forChecked.set(position, templist2);
                                 break;
                             case R.id.ButtonC:
-                                if (chosen.get(position).size() == 0) {
+                                if (Chosen.get(position).size() == 0) {
                                     hasDone++;
                                     notifyDataSetChanged();
                                     HasDone.setText("Đã làm: " + hasDone + "/" + exam.getQuestionList().size());
@@ -385,11 +374,11 @@ public class ExamActivity extends AppCompatActivity {
                                 templist.add(finalHolder.C.getText().toString());
                                 templist2 = new ArrayList<>();
                                 templist2.add("C");
-                                chosen.set(position, templist);
+                                Chosen.set(position, templist);
                                 forChecked.set(position, templist2);
                                 break;
                             case R.id.ButtonD:
-                                if (chosen.get(position).size() == 0) {
+                                if (Chosen.get(position).size() == 0) {
                                     hasDone++;
                                     notifyDataSetChanged();
                                     HasDone.setText("Đã làm: " + hasDone + "/" + exam.getQuestionList().size());
@@ -398,7 +387,7 @@ public class ExamActivity extends AppCompatActivity {
                                 templist.add(finalHolder.D.getText().toString());
                                 templist2 = new ArrayList<>();
                                 templist2.add("D");
-                                chosen.set(position, templist);
+                                Chosen.set(position, templist);
                                 forChecked.set(position, templist2);
                                 break;
                             default: {
@@ -433,20 +422,20 @@ public class ExamActivity extends AppCompatActivity {
                     @Override
                     public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                         if(isChecked){
-                            if(chosen.get(position).size()==0){
+                            if(Chosen.get(position).size()==0){
                                 hasDone++;
                                 notifyDataSetChanged();
                                 HasDone.setText("Đã làm: " + hasDone + "/" + exam.getQuestionList().size());
                                 shortcutRecyclerView.getChildAt(position).findViewById(R.id.page).setBackgroundColor(getResources().getColor(R.color.green));
 
                             }
-                            chosen.get(position).add(((ViewHolderTwo) holder).A.getText().toString());
+                            Chosen.get(position).add(((ViewHolderTwo) holder).A.getText().toString());
                             forChecked.get(position).add("A");
                         }
                         else{
-                            chosen.get(position).remove(((ViewHolderTwo) holder).A.getText().toString());
+                            Chosen.get(position).remove(((ViewHolderTwo) holder).A.getText().toString());
                             forChecked.get(position).remove("A");
-                            if(chosen.get(position).size()==0){
+                            if(Chosen.get(position).size()==0){
                                 hasDone--;
                                 notifyDataSetChanged();
                                 HasDone.setText("Đã làm: " + hasDone + "/" + exam.getQuestionList().size());
@@ -460,21 +449,21 @@ public class ExamActivity extends AppCompatActivity {
                     @Override
                     public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                         if(isChecked){
-                            if(chosen.get(position).size()==0){
+                            if(Chosen.get(position).size()==0){
                                 hasDone++;
                                 notifyDataSetChanged();
                                 HasDone.setText("Đã làm: " + hasDone + "/" + exam.getQuestionList().size());
                                 shortcutRecyclerView.getChildAt(position).findViewById(R.id.page).setBackgroundColor(getResources().getColor(R.color.green));
 
                             }
-                            chosen.get(position).add(((ViewHolderTwo) holder).B.getText().toString());
+                            Chosen.get(position).add(((ViewHolderTwo) holder).B.getText().toString());
                             forChecked.get(position).add("B");
 
                         }
                         else{
-                            chosen.get(position).remove(((ViewHolderTwo) holder).B.getText().toString());
+                            Chosen.get(position).remove(((ViewHolderTwo) holder).B.getText().toString());
                             forChecked.get(position).remove("B");
-                            if(chosen.get(position).size()==0){
+                            if(Chosen.get(position).size()==0){
                                 hasDone--;
                                 notifyDataSetChanged();
                                 HasDone.setText("Đã làm: " + hasDone + "/" + exam.getQuestionList().size());
@@ -488,20 +477,20 @@ public class ExamActivity extends AppCompatActivity {
                     @Override
                     public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                         if(isChecked){
-                            if(chosen.get(position).size()==0){
+                            if(Chosen.get(position).size()==0){
                                 hasDone++;
                                 notifyDataSetChanged();
                                 HasDone.setText("Đã làm: " + hasDone + "/" + exam.getQuestionList().size());
                                 shortcutRecyclerView.getChildAt(position).findViewById(R.id.page).setBackgroundColor(getResources().getColor(R.color.green));
 
                             }
-                            chosen.get(position).add(((ViewHolderTwo) holder).C.getText().toString());
+                            Chosen.get(position).add(((ViewHolderTwo) holder).C.getText().toString());
                             forChecked.get(position).add("C");
                         }
                         else{
-                            chosen.get(position).remove(((ViewHolderTwo) holder).C.getText().toString());
+                            Chosen.get(position).remove(((ViewHolderTwo) holder).C.getText().toString());
                             forChecked.get(position).remove("C");
-                            if(chosen.get(position).size()==0){
+                            if(Chosen.get(position).size()==0){
                                 hasDone--;
                                 notifyDataSetChanged();
                                 HasDone.setText("Đã làm: " + hasDone + "/" + exam.getQuestionList().size());
@@ -515,20 +504,20 @@ public class ExamActivity extends AppCompatActivity {
                     @Override
                     public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                         if(isChecked){
-                            if(chosen.get(position).size()==0){
+                            if(Chosen.get(position).size()==0){
                                 hasDone++;
                                 notifyDataSetChanged();
                                 HasDone.setText("Đã làm: " + hasDone + "/" + exam.getQuestionList().size());
                                 shortcutRecyclerView.getChildAt(position).findViewById(R.id.page).setBackgroundColor(getResources().getColor(R.color.green));
 
                             }
-                            chosen.get(position).add(((ViewHolderTwo) holder).D.getText().toString());
+                            Chosen.get(position).add(((ViewHolderTwo) holder).D.getText().toString());
                             forChecked.get(position).add("D");
                         }
                         else{
-                            chosen.get(position).remove(((ViewHolderTwo) holder).D.getText().toString());
+                            Chosen.get(position).remove(((ViewHolderTwo) holder).D.getText().toString());
                             forChecked.get(position).remove("D");
-                            if(chosen.get(position).size()==0){
+                            if(Chosen.get(position).size()==0){
                                 hasDone--;
                                 notifyDataSetChanged();
                                 HasDone.setText("Đã làm: " + hasDone + "/" + exam.getQuestionList().size());

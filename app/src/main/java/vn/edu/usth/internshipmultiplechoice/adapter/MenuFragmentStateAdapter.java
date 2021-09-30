@@ -28,8 +28,8 @@ public class MenuFragmentStateAdapter extends FragmentStateAdapter {
             return ExamFragment.newInstance();
         }
         if(position == 1){
-            return BankFragment.newInstance();
-        }
+            return ExamFragment.newInstance();
+            }
         else{
             return UserFragment.newInstance();
         }

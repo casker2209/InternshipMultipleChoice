@@ -1,42 +1,30 @@
 package vn.edu.usth.internshipmultiplechoice;
 
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.os.Parcelable;
 import android.util.Log;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Set;
 
-import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-import vn.edu.usth.internshipmultiplechoice.object.Exam;
-import vn.edu.usth.internshipmultiplechoice.object.Question;
 import vn.edu.usth.internshipmultiplechoice.retrofit.LoginRequest;
 import vn.edu.usth.internshipmultiplechoice.retrofit.RetrofitClient;
-import vn.edu.usth.internshipmultiplechoice.retrofit.StaticUserInformation;
-import vn.edu.usth.internshipmultiplechoice.retrofit.UserInfo;
+import vn.edu.usth.internshipmultiplechoice.retrofit.User;
 import vn.edu.usth.internshipmultiplechoice.utility.UserSharedPreferences;
 
 public class LoadingActivity extends AppCompatActivity {
-    private UserInfo userInfo;
+    private User user;
     private TextView contentText;
     private RetrofitClient retrofit;
     @Override
@@ -79,11 +67,11 @@ public class LoadingActivity extends AppCompatActivity {
                         String username = result.get("username").getAsString();
                         String token = result.get("tokenType").getAsString() + " " + result.get("accessToken").getAsString();
                         String name = result.get("name").getAsString();
-                        UserInfo userInfo = new UserInfo(id, username, email, token, name);
-                        UserSharedPreferences.saveUser(userInfo, LoadingActivity.this);
+                        User user = new User(id, username, email, token, name);
+                        UserSharedPreferences.saveUser(user, LoadingActivity.this);
 
-                        UserInfo userInfo1 = UserSharedPreferences.getUser(LoadingActivity.this);
-                        System.out.println("id: " + userInfo1.toString());
+                        User user1 = UserSharedPreferences.getUser(LoadingActivity.this);
+                        System.out.println("id: " + user1.toString());
                         startActivity(intent);
                         finish();
                     } else {
